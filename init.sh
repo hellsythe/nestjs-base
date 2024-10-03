@@ -7,13 +7,23 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-docker run --rm \
+echo "Iniciando proyecto..."
+
+git clone https://github.com/nestjs/typescript-starter.git $1 -q
+cd $1
+rm .git -rf
+git init -q
+git add . &> /dev/null
+git commit -m "Initial commit" &> /dev/null
+
+echo "Instalando dependencias..."
+
+docker run -it --rm \
     -v "$(pwd)":/app \
     -w /app \
     node \
-    bash -c "git clone https://github.com/nestjs/typescript-starter.git $1 && cd $1 && npm install && rm .git -rf"
+    bash -c "npm install &> /dev/null && npm i @sdkconsultoria/nestjs-base && npx cli"
 
-cd $1
 
 CYAN='\033[0;36m'
 LIGHT_CYAN='\033[1;36m'
