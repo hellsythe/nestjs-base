@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import Settings from './settings.js';
-import DevContainers from './devcontainers.js';
-import Database from './database.js';
+import Settings from './scripts/settings.js';
+import DevContainers from './scripts/devcontainers.js';
+import Database from './scripts/database.js';
 import { select } from '@inquirer/prompts';
-import NodeContainer from './node.js';
+import NodeContainer from './scripts/node.js';
 
 console.log('Configurando tu proyecto...');
 const settings = new Settings();

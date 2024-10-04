@@ -1,5 +1,5 @@
 {
-  "name": "MS plantillas Nest",
+  "name": "nestjs-base",
 
   "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
 
