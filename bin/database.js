@@ -27,15 +27,31 @@ export default class Database {
                 }
             ],
         });
+
+        if(this.settings.devcontainer){
+            this.settings.dockerizeDatabase =  true;
+        } else {
+            this.settings.dockerizeDatabase  = await select({
+                message: `¿Deseas agregar un contenedor para tu base de datos ${this.settings.database}?`,
+                choices: [
+                    {
+                        name: 'Si',
+                        value: true,
+                    },
+                    {
+                        name: 'No, ya tengo una base de datos en mi host',
+                        value: false,
+                    }
+                ],
+            });
+        }
     }
 
     async dockerizeDatabase(){
-        if(!this.settings.database){
-            this.settings.dockerizeDatabase =  false;
+        if(!this.settings.dockerizeDatabase){
             return;
         }
 
-        this.settings.dockerizeDatabase =  true;
         console.log(`Copiando archivos para dockerizar la base de datos ${this.settings.database}...`);
 
         switch(this.settings.database){

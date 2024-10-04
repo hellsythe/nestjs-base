@@ -4,12 +4,16 @@ import Settings from './settings.js';
 import DevContainers from './devcontainers.js';
 import Database from './database.js';
 import { select } from '@inquirer/prompts';
+import NodeContainer from './node.js';
 
 console.log('Configurando tu proyecto...');
 const settings = new Settings();
 
 const devContainers = new DevContainers(settings);
 await devContainers.init();
+
+const node = new NodeContainer(settings);
+await node.init();
 
 const database = new Database(settings);
 await database.init();
