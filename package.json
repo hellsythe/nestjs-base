@@ -1,6 +1,6 @@
 {
   "name": "@sdkconsultoria/nestjs-base",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Crea proyectos de NestJS con Clean Architecture y DDD",
   "bin": {
     "cli": "bin/index.js"

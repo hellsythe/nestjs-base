@@ -3,6 +3,8 @@
 import Settings from './settings.js';
 import DevContainers from './devcontainers.js';
 import Database from './database.js';
+import { select } from '@inquirer/prompts';
+
 console.log('Configurando tu proyecto...');
 const settings = new Settings();
 
@@ -14,6 +16,20 @@ await database.init();
 
 const featureFlags = await select({
     message: '¿Habilitar feature flags?',
+    choices: [
+        {
+            name: 'Si',
+            value: true,
+        },
+        {
+            name: 'No',
+            value: false,
+        }
+    ],
+});
+
+const swagger = await select({
+    message: '¿Habilitar swagger?',
     choices: [
         {
             name: 'Si',
