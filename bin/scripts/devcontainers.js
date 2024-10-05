@@ -15,7 +15,7 @@ export default class DevContainers {
 
     async question(){
        this.settings.devcontainer = await select({
-            message: '¿Quieres utilizar Devcontainer para VS Code?',
+            message: '¿Deseas utilizar Devcontainer para VS Code?',
             choices: [
                 {
                     name: 'Si',

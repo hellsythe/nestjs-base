@@ -18,14 +18,14 @@ export default class NodeContainer {
 
     async question(){
        this.settings.dockerizeNode = await select({
-            message: '¿Quieres implementar un contenedor para nodeJS?',
+            message: '¿Deseas utilizar un contenedor para nodeJS?',
             choices: [
                 {
                     name: 'Si',
                     value: true,
                 },
                 {
-                    name: 'No',
+                    name: 'No, usaré nodeJS localmente',
                     value: false,
                 }
             ],
