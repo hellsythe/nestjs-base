@@ -1,7 +1,7 @@
 import { select } from '@inquirer/prompts';
 import { exec } from 'child_process';
 
-export default class FeatureFlags {
+export default class Health {
     settings;
 
     constructor(settings) {
@@ -10,23 +10,22 @@ export default class FeatureFlags {
 
     async init() {
         await this.question();
-        if(this.settings.featureFlags){
-            await exec('npm i unleash-client');
+        if(this.settings.healthCheck){
+            exec('npm install --save @nestjs/terminus');
         }
-
     }
 
     async question() {
-        this.settings.featureFlags = await select({
-            message: '¿Deseas implementar feature flags?',
+        this.settings.healthCheck = await select({
+            message: '¿Deseas implementar una página de health?',
             choices: [
-                {
-                    name: 'No',
-                    value: false,
-                },
                 {
                     name: 'Si',
                     value: true,
+                },
+                {
+                    name: 'No',
+                    value: false,
                 }
             ],
         });

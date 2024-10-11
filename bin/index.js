@@ -8,6 +8,7 @@ import NodeContainer from './scripts/node.js';
 import Swagger from './scripts/swagger.js';
 import TestContainers from './scripts/testContainers.js';
 import Architecture from './scripts/architecture.js';
+import Health from './scripts/healthcheck.js'
 
 console.log('Configurando tu proyecto...');
 
@@ -20,3 +21,4 @@ await new FeatureFlags(settings).init();
 await new Swagger(settings).init();
 await new TestContainers(settings).init();
 await new Architecture(settings).init();
+await new Health(settings).init();

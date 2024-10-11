@@ -1,4 +1,5 @@
 import { select } from '@inquirer/prompts';
+import { exec } from 'child_process';
 
 export default class Swagger {
     settings;
@@ -9,10 +10,13 @@ export default class Swagger {
 
     async init() {
         await this.question();
+        if(this.settings.swagger ){
+            exec('npm i swagger-ui-express');
+        }
     }
 
     async question() {
-        this.settings.dockerizeNode = await select({
+        this.settings.swagger = await select({
             message: '¿Deseas implementar Swagger?',
             choices: [
                 {

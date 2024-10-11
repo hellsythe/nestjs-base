@@ -1,5 +1,6 @@
 import { select } from '@inquirer/prompts';
 import { promises } from "fs";
+import { exec } from 'child_process';
 
 export default class Database {
     settings;
@@ -58,6 +59,7 @@ export default class Database {
             case 'mongo':
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/devcontainer/docker-compose-mongo.yml', process.cwd()+'/docker-compose.yml', { recursive: true });
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/.env', process.cwd()+'/.env', { recursive: true });
+                await exec('npm i @nestjs/mongoose mongoose');
                 break;
             default:
                 break;

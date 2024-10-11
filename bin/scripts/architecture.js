@@ -12,7 +12,7 @@ export default class Architecture {
     }
 
     async question() {
-        this.settings.dockerizeNode = await select({
+        this.settings.architecture = await select({
             message: '¿Deseas implementar una plantilla de arquitectura?',
             choices: [
                 {

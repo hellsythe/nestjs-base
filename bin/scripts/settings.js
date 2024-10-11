@@ -7,4 +7,5 @@ export default class Settings {
     testContainers;
     swagger;
     architecture;
+    healthCheck
 }

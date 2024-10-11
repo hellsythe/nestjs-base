@@ -12,7 +12,7 @@ export default class TestContainers {
     }
 
     async question() {
-        this.settings.dockerizeNode = await select({
+        this.settings.testContainers = await select({
             message: '¿Deseas implementar TestContainers?',
             choices: [
                 {
