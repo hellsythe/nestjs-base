@@ -11,7 +11,7 @@ export default class FeatureFlags {
     async init() {
         await this.question();
         if(this.settings.featureFlags){
-            await exec('npm i unleash-client');
+            // await exec('npm i unleash-client');
         }
 
     }

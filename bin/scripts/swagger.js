@@ -11,7 +11,7 @@ export default class Swagger {
     async init() {
         await this.question();
         if(this.settings.swagger ){
-            exec('npm i swagger-ui-express');
+            // exec('npm i swagger-ui-express');
         }
     }
 

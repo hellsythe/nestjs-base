@@ -1,4 +1,5 @@
 import { select } from '@inquirer/prompts';
+import { exec } from 'child_process';
 
 export default class TestContainers {
     settings;
@@ -9,6 +10,10 @@ export default class TestContainers {
 
     async init() {
         await this.question();
+        if(this.settings.testContainers){
+            // exec('npm install --save-dev testContainers');
+            // exec('npm install @testcontainers/mongodb --save-dev');
+        }
     }
 
     async question() {

@@ -11,7 +11,7 @@ export default class Health {
     async init() {
         await this.question();
         if(this.settings.healthCheck){
-            exec('npm install --save @nestjs/terminus');
+            // exec('npm install --save @nestjs/terminus');
         }
     }
 
