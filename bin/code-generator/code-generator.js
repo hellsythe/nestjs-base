@@ -1,5 +1,6 @@
 import Entity from "./entity.js";
 import Repository from "./repository.js";
+import CrudUseCase from "./crud-use-case.js";
 
 export class CodeGenerator {
   async run(args) {
@@ -15,7 +16,7 @@ export class CodeGenerator {
       case 'entity':
         await new Entity().generate(args);
         break;
-        case 'repository':
+      case 'repository':
         await new Repository().generate(args);
         break;
       case 'usecase':
@@ -25,6 +26,7 @@ export class CodeGenerator {
         break;
       case 'crud-use-case':
       case 'crud-usecase':
+        await new CrudUseCase().generate(args);
         break;
       case 'crud-api':
         break;

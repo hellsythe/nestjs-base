@@ -1,4 +1,5 @@
 import { select } from '@inquirer/prompts';
+import { promises } from "fs";
 
 export default class Architecture {
     settings;
@@ -9,6 +10,15 @@ export default class Architecture {
 
     async init() {
         await this.question();
+        switch (this.settings.architecture) {
+            case 'clean-code':
+                await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/tsconfig.json', process.cwd()+'/tsconfig.json');
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     async question() {
@@ -17,7 +27,7 @@ export default class Architecture {
             choices: [
                 {
                     name: 'Arquitectura Limpia',
-                    value: false,
+                    value: 'clean-code',
                 },
                 {
                     name: 'no utilizar plantilla',
