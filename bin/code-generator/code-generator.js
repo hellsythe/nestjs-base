@@ -1,4 +1,5 @@
 import Entity from "./entity.js";
+import Repository from "./repository.js";
 
 export class CodeGenerator {
   async run(args) {
@@ -14,7 +15,8 @@ export class CodeGenerator {
       case 'entity':
         await new Entity().generate(args);
         break;
-      case 'repository':
+        case 'repository':
+        await new Repository().generate(args);
         break;
       case 'usecase':
       case 'use-case':
