@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import { promises } from "fs";
 import { kebabCase, remplazeInFile, pascalCase, processLineByLine } from './utils.js';
 
@@ -33,7 +32,6 @@ export default class Repository {
     for (let index = 0; index < data.length; index++) {
       if (data[index].includes(':')) {
         props.push('\n  @Prop({ required: true })\n'+data[index]);
-        // props.push(data[index]+'\n');
       }
     }
 
