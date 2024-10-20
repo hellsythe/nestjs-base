@@ -16,6 +16,7 @@
       "@usecases/*": ["./src/use-cases/*"],
       "@entities/*": ["./src/entities/*"],
       "@infrastructure/*": ["./src/infrastructure/*"],
+      "@interface-adapters/*": ["./src/interface-adapters/*"],
       "@test/*": ["./test/*"]
     }
   }

@@ -7,11 +7,23 @@ export default class CrudUseCase{
 
   async generate(args) {
     this.validate(args);
-    await promises.cp(`${this.stubFolder}create.ts.stub`, `${this.outFolder}${kebabCase(args[4])}/create.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(args[4])}/create.ts`, '{{modelClass}}', pascalCase(args[4]));
-    await remplazeInFile(`${this.outFolder}${kebabCase(args[4])}/create.ts`, '{{modelCamel}}', camelCase(args[4]));
-    await remplazeInFile(`${this.outFolder}${kebabCase(args[4])}/create.ts`, '{{modelFile}}', kebabCase(args[4]));
+    this.copyAndReplaceUseCase('create', args[4]);
+    this.copyDtos(args[4]);
 
+  }
+
+  async copyAndReplaceUseCase(useCase, entity){
+    await promises.cp(`${this.stubFolder}${useCase}.ts.stub`, `${this.outFolder}${kebabCase(entity)}/${useCase}.ts`);
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelCamel}}', camelCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelFile}}', kebabCase(entity));
+  }
+
+  async copyDtos(entity){
+    await promises.cp(`${this.stubFolder}dtos/create.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/create.dto.ts`);
+    await promises.cp(`${this.stubFolder}dtos/update.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/update.dto.ts`);
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/create.dto.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/update.dto.ts`, '{{modelClass}}', pascalCase(entity));
   }
 
   validate(args) {
