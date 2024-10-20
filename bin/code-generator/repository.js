@@ -4,10 +4,12 @@ import { kebabCase, remplazeInFile, pascalCase, processLineByLine } from './util
 export default class Repository {
   stubFolder = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/';
   outFolder = process.cwd() + '/src/infrastructure/db/mongo';
+  outFolderRepository = process.cwd() + '/src/infrastructure/db/mongo/repositories/';
 
   async generate(args) {
     this.validate(args);
     await this.writteSchema(args);
+    await this.writteRepository(args);
 
   }
 
@@ -24,6 +26,17 @@ export default class Repository {
     const propierties = await this.loadProperties(args);
     await remplazeInFile(outFile, '{}', `{${propierties.join('\n')}\n}`);
 
+  }
+
+  async writteRepository(args){
+    const repositoryInterface = `${process.cwd() + '/src/use-cases/'}${kebabCase(args[4])}/repository.interface.ts`;
+    await promises.cp(`${this.stubFolder}usecases/model.repository.interface.ts.stub`, repositoryInterface);
+    await remplazeInFile(repositoryInterface, '{{modelClass}}', pascalCase(args[4]));
+    await remplazeInFile(repositoryInterface, '{{modelFile}}', kebabCase(args[4]));
+
+    await promises.cp(`${this.stubFolder}usecases/model.repository.ts.stub`, `${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`);
+    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelClass}}', pascalCase(args[4]));
+    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelFile}}', kebabCase(args[4]));
   }
 
   async loadProperties(args) {

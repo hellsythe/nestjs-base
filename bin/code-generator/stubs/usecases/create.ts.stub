@@ -1,0 +1,15 @@
+import { Inject } from '@nestjs/common';
+import { {{modelClass}} } from '@entities/{{modelFile}}';
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { Create{{modelClass}}Model } from './{{modelFile}}.dto';
+
+export class Create{{modelClass}} {
+  constructor(
+    @Inject('{{modelCamel}}Repository')
+    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+  ) {}
+
+  async execute({{modelCamel}}: Create{{modelClass}}Model): Promise<{{modelClass}}> {
+    return await this.{{modelCamel}}Repository.create({{modelCamel}});
+  }
+}

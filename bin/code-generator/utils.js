@@ -1,4 +1,5 @@
 import * as fs from 'node:fs/promises';
+import * as fsb from 'node:fs';
 import * as readline from 'readline';
 import * as events from 'events';
 
@@ -39,11 +40,11 @@ export const pascalCase = (str) =>
 
 export async function processLineByLine(filePath) {
   const lines = [];
-  if (!fs.existsSync(filePath)) {
+  if (!fsb.existsSync(filePath)) {
     throw new Error('La entidad no existe');
   }
 
-  const fileStream = fs.createReadStream(filePath);
+  const fileStream = fsb.createReadStream(filePath);
 
   const file = readline.createInterface({
     input: fileStream,
