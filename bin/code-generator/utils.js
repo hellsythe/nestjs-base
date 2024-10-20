@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'node:fs/promises';
 import * as readline from 'readline';
 import * as events from 'events';
 
@@ -14,21 +14,14 @@ export const kebabCase = string => string
 
 export async function remplazeInFile(file, search, replace) {
 
-  await fs.readFile(file, 'utf-8', async (err, contents) => {
-    if (err) {
-      console.error(err)
+  const contents = await fs.readFile(file, 'utf8');
+  const regExp = new RegExp(search, 'gi')
+  const updated = contents.replace(regExp, replace)
+
+  await fs.writeFile(file, updated, 'utf-8', err2 => {
+    if (err2) {
+      throw Error(err2);
     }
-
-    // Replace string occurrences
-    const regExp = new RegExp(search, 'gi')
-    const updated = contents.replace(regExp, replace)
-
-    // Write back to file
-    fs.writeFile(file, updated, 'utf-8', err2 => {
-      if (err2) {
-        console.log(err2)
-      }
-    })
   })
 };
 
@@ -68,8 +61,7 @@ export async function processLineByLine(filePath) {
   return lines;
 }
 
-export async function addContentInLineToFile(file, content, lineNumber)
-{
+export async function addContentInLineToFile(file, content, lineNumber) {
   var data = fs.readFileSync(file).toString().split("\n");
   data.splice(lineNumber, 0, content);
   var text = data.join("\n");

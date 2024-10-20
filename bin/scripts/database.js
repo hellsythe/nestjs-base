@@ -60,7 +60,7 @@ export default class Database {
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/devcontainer/docker-compose-mongo.yml', process.cwd()+'/docker-compose.yml', { recursive: true });
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/.env', process.cwd()+'/.env', { recursive: true });
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/generic.repository.interface.ts.stub', process.cwd()+'/src/use-cases/common/generic.repository.interface.ts');
-                await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/generic.repository.mongo.ts.stub', process.cwd()+'/src/infrastructure/db/mongo/repositories/generic.repository.mongo.ts');
+                await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/generic.repository.mongo.ts.stub', process.cwd()+'/src/infrastructure/db/mongo/repositories/generic.repository.ts');
                 await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/db-mongo.module.ts.stub', process.cwd()+'/src/infrastructure/db/db-mongo.module.ts');
                 await exec('npm i @nestjs/mongoose mongoose');
                 break;

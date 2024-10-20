@@ -1,19 +1,21 @@
 import { promises } from "fs";
-import { kebabCase, remplazeInFile, pascalCase } from './utils.js';
+import { kebabCase, remplazeInFile, pascalCase, camelCase } from './utils.js';
 
 export default class CrudUseCase{
-  stubFile = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/entity.ts.stub';
-  outFolder = process.cwd() + '/src/entities/';
+  stubFolder = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/usecases/';
+  outFolder = process.cwd() + '/src/use-cases/';
+  outFolderRepository = process.cwd() + '/src/infrastructure/db/mongo/repositories/';
 
   async generate(args) {
     this.validate(args);
-    // await promises.cp(this.stubFile, this.getOutfile(args));
-    // await remplazeInFile(this.getOutfile(args), '{{name}}', pascalCase(args[4]));
+    const repositoryInterface = `${this.outFolder}${kebabCase(args[4])}/repository.interface.ts`;
+    await promises.cp(`${this.stubFolder}model.repository.interface.ts.stub`, repositoryInterface);
+    await remplazeInFile(repositoryInterface, '{{modelClass}}', pascalCase(args[4]));
+    await remplazeInFile(repositoryInterface, '{{modelFile}}', kebabCase(args[4]));
 
-  }
-
-  getOutfile(args) {
-    return `${this.outFolder}${kebabCase(args[4])}.ts`;
+    await promises.cp(`${this.stubFolder}model.repository.ts.stub`, `${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`);
+    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelClass}}', pascalCase(args[4]));
+    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelFile}}', kebabCase(args[4]));
   }
 
   validate(args) {

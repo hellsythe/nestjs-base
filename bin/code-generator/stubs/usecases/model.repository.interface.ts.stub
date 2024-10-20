@@ -1,0 +1,4 @@
+import { IGenericRepository } from '../common/generic.repository.interface';
+import { {{modelClass}} } from '@entities/{{modelFile}}';
+
+export interface I{{modelClass}}Repository extends IGenericRepository<{{modelClass}}> {}
