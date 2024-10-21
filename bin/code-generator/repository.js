@@ -40,7 +40,7 @@ export default class Repository {
   }
 
   async loadProperties(args) {
-    const data = await processLineByLine(`${process.cwd()}/src/entities/${kebabCase(args[4])}.ts`);
+    const data = await processLineByLine(`${process.cwd()}/src/entities/${kebabCase(args[4])}.model.ts`);
     const props = [];
     for (let index = 0; index < data.length; index++) {
       if (data[index].includes(':')) {

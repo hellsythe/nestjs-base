@@ -2,7 +2,7 @@ import { promises } from "fs";
 import { kebabCase, remplazeInFile, pascalCase } from './utils.js';
 
 export default class Entity {
-  stubFile = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/entity.ts.stub';
+  stubFile = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/entity.model.ts.stub';
   outFolder = process.cwd() + '/src/entities/';
 
   async generate(args) {
@@ -13,7 +13,7 @@ export default class Entity {
   }
 
   getOutfile(args) {
-    return `${this.outFolder}${kebabCase(args[4])}.ts`;
+    return `${this.outFolder}${kebabCase(args[4])}.model.ts`;
   }
 
   validate(args) {

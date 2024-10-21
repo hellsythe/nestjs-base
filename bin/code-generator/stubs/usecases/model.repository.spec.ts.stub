@@ -1,0 +1,54 @@
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
+import { Test, TestingModule } from '@nestjs/testing';
+import {
+  Template,
+  TemplateDocument,
+  TemplateSchema,
+} from '@infrastructure/db/mongo/schemas/template.schema';
+import { TemplateRepository } from './template.repository';
+import { Model } from 'mongoose';
+import { InitializeDatabase } from '@test/utils/db/initdatabase';
+import { createFakeTemplate } from '@test/factory/template.factory';
+
+describe('templateRepository', () => {
+  const initializeDatabase: InitializeDatabase = new InitializeDatabase();
+  let module: TestingModule;
+  let templateModel: Model<Template>;
+  let templateRepository: TemplateRepository;
+
+  beforeAll(async () => {
+    await initializeDatabase.init();
+
+    module = await Test.createTestingModule({
+      imports: [
+        MongooseModule.forRoot(initializeDatabase.conectionString),
+        MongooseModule.forFeature([
+          { name: Template.name, schema: TemplateSchema },
+        ]),
+      ],
+      providers: [TemplateRepository],
+    }).compile();
+
+    templateModel = module.get<Model<TemplateDocument>>(
+      getModelToken(Template.name),
+    );
+    templateRepository = module.get(TemplateRepository);
+  }, 60_000);
+
+  afterAll(async () => {
+    await module.close();
+    await initializeDatabase.stop();
+  });
+
+  beforeEach(async () => {
+    await templateModel.collection.deleteMany();
+  });
+
+  test('create', async () => {
+    const fakeTemplate = createFakeTemplate();
+    await templateRepository.create(fakeTemplate);
+    const foundItem = await templateModel.findOne(fakeTemplate);
+
+    expect(fakeTemplate.name).toEqual(foundItem.name);
+  });
+});

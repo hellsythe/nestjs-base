@@ -1,12 +1,12 @@
 import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
 import { GenericRepository } from './generic.repository';
-import { {{modelClass}} } from '@entities/{{modelFile}}';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
 import { {{modelClass}} as {{modelClass}}Schema } from '@infrastructure/db/mongo/schemas/{{modelFile}}.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 export class {{modelClass}}Repository
-  extends GenericRepository<{{modelClass}}, {{modelClass}}Schema>
+  extends GenericRepository<{{modelClass}}Model, {{modelClass}}Schema>
   implements I{{modelClass}}Repository
 {
   constructor(
@@ -16,8 +16,8 @@ export class {{modelClass}}Repository
     super();
   }
 
-  protected transform(item: {{modelClass}}Schema): {{modelClass}} {
-    const newModel: {{modelClass}} = new {{modelClass}}();
+  protected transform(item: {{modelClass}}Schema): {{modelClass}}Model {
+    const newModel: {{modelClass}}Model = new {{modelClass}}Model();
     Object.assign(newModel, item['_doc']);
     return newModel;
   }

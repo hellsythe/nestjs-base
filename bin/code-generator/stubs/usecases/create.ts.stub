@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { {{modelClass}} } from '@entities/{{modelFile}}';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
 import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
 import { Create{{modelClass}}Dto } from './dtos/create.dto';
 
@@ -9,7 +9,7 @@ export class Create{{modelClass}} {
     private {{modelCamel}}Repository: I{{modelClass}}Repository,
   ) {}
 
-  async execute({{modelCamel}}: Create{{modelClass}}Dto): Promise<{{modelClass}}> {
+  async execute({{modelCamel}}: Create{{modelClass}}Dto): Promise<{{modelClass}}Model> {
     return await this.{{modelCamel}}Repository.create({{modelCamel}});
   }
 }

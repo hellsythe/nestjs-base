@@ -9,7 +9,6 @@ export default class CrudUseCase{
     this.validate(args);
     this.copyAndReplaceUseCase('create', args[4]);
     this.copyDtos(args[4]);
-
   }
 
   async copyAndReplaceUseCase(useCase, entity){
