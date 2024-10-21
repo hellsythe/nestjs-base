@@ -1,54 +1,94 @@
-import { getModelToken, MongooseModule } from '@nestjs/mongoose';
-import { Test, TestingModule } from '@nestjs/testing';
 import {
-  Template,
-  TemplateDocument,
-  TemplateSchema,
-} from '@infrastructure/db/mongo/schemas/template.schema';
-import { TemplateRepository } from './template.repository';
+  {{modelClass}},
+  {{modelClass}}Schema,
+} from '@infrastructure/db/mongo/schemas/{{modelFile}}.schema';
+import { {{modelClass}}Repository } from './{{modelFile}}.repository';
 import { Model } from 'mongoose';
-import { InitializeDatabase } from '@test/utils/db/initdatabase';
-import { createFakeTemplate } from '@test/factory/template.factory';
+import { createFake{{modelClass}} } from '@test/factory/{{modelFile}}.factory';
+import { DbTestingModule } from '@test/utils/db/db-testing-module';
+import { NotFoundException } from '@nestjs/common';
 
-describe('templateRepository', () => {
-  const initializeDatabase: InitializeDatabase = new InitializeDatabase();
-  let module: TestingModule;
-  let templateModel: Model<Template>;
-  let templateRepository: TemplateRepository;
+describe('{{modelFile}}Repository', () => {
+  const dbTestingModule: DbTestingModule<Model<{{modelClass}}>> =
+    new DbTestingModule();
 
   beforeAll(async () => {
-    await initializeDatabase.init();
-
-    module = await Test.createTestingModule({
-      imports: [
-        MongooseModule.forRoot(initializeDatabase.conectionString),
-        MongooseModule.forFeature([
-          { name: Template.name, schema: TemplateSchema },
-        ]),
-      ],
-      providers: [TemplateRepository],
-    }).compile();
-
-    templateModel = module.get<Model<TemplateDocument>>(
-      getModelToken(Template.name),
-    );
-    templateRepository = module.get(TemplateRepository);
+    await dbTestingModule.init({
+      model: {{modelClass}},
+      repository: {{modelClass}}Repository,
+      schema: {{modelClass}}Schema,
+    });
   }, 60_000);
 
   afterAll(async () => {
-    await module.close();
-    await initializeDatabase.stop();
+    await dbTestingModule.stop();
   });
 
   beforeEach(async () => {
-    await templateModel.collection.deleteMany();
+    await dbTestingModule.clearSchema();
   });
 
   test('create', async () => {
-    const fakeTemplate = createFakeTemplate();
-    await templateRepository.create(fakeTemplate);
-    const foundItem = await templateModel.findOne(fakeTemplate);
+    const fake{{modelClass}} = createFake{{modelClass}}();
+    await dbTestingModule.repository.create(fake{{modelClass}});
+    const foundItem = await dbTestingModule.model.findOne(fake{{modelClass}});
 
-    expect(fakeTemplate.name).toEqual(foundItem.name);
+    expect(fake{{modelClass}}.name).toEqual(foundItem.name);
+  });
+
+  test('update', async () => {
+    const fake{{modelClass}} = createFake{{modelClass}}();
+    const {{modelCamelCase}}Saved = await dbTestingModule.repository.create(fake{{modelClass}});
+    const oldName = {{modelCamelCase}}Saved.name;
+    fake{{modelClass}}.name = 'new name';
+
+    await dbTestingModule.repository.update(
+      { _id: {{modelCamelCase}}Saved._id },
+      fake{{modelClass}},
+    );
+    const {{modelCamelCase}} = await dbTestingModule.repository.findOne({
+      _id: {{modelCamelCase}}Saved._id,
+    });
+
+    expect({{modelCamelCase}}.name).not.toEqual(oldName);
+    expect({{modelCamelCase}}.name).toEqual('new name');
+  });
+
+  test('delete', async () => {
+    const fake{{modelClass}} = createFake{{modelClass}}();
+    const {{modelCamelCase}}Saved = await dbTestingModule.repository.create(fake{{modelClass}});
+    await dbTestingModule.repository.delete({{modelCamelCase}}Saved._id);
+
+    await expect(async () => {
+      await dbTestingModule.repository.findOne({
+        _id: {{modelCamelCase}}Saved._id,
+      });
+    }).rejects.toThrow(new NotFoundException('item not found'));
+  });
+
+  test('getAll', async () => {
+    const fake{{modelClass}} = createFake{{modelClass}}();
+    await dbTestingModule.repository.create(fake{{modelClass}});
+    const {{modelCamelCase}}s = await dbTestingModule.repository.find({});
+    expect({{modelCamelCase}}s.length).toEqual(1);
+  });
+
+  test('findOne - Success', async () => {
+    const fake{{modelClass}} = createFake{{modelClass}}();
+    await dbTestingModule.repository.create(fake{{modelClass}});
+
+    const {{modelCamelCase}} = await dbTestingModule.repository.findOne({
+      name: fake{{modelClass}}.name,
+    });
+
+    expect({{modelCamelCase}}.name).toEqual(fake{{modelClass}}.name);
+  });
+
+  test('findOne - Not Found', async () => {
+    await expect(async () => {
+      await dbTestingModule.repository.findOne({
+        name: 'value',
+      });
+    }).rejects.toThrow(new NotFoundException('item not found'));
   });
 });
