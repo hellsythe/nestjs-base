@@ -7,6 +7,7 @@ import Swagger from './swagger.js';
 import TestContainers from './testContainers.js';
 import Architecture from './architecture.js';
 import Health from './healthcheck.js'
+import Common from './common.js'
 
 export default class InitProyect {
   async run(){
@@ -20,6 +21,7 @@ export default class InitProyect {
     // await new TestContainers(settings).init();
     // await new Health(settings).init();
     await new Architecture(settings).init();
+    await new Common().init();
   }
 }
 

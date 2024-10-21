@@ -12,7 +12,6 @@ export default class Architecture {
         await this.question();
         switch (this.settings.architecture) {
             case 'clean-code':
-                await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/tsconfig.json', process.cwd()+'/tsconfig.json');
 
                 break;
 

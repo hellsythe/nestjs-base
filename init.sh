@@ -22,7 +22,7 @@ docker run -it --rm \
     -v "$(pwd)":/app \
     -w /app \
     node \
-    bash -c "npm install &> /dev/null && npm i @sdkconsultoria/nestjs-base && npm i dotenv --save-dev && npm i @faker-js/faker --save-dev && npx cli"
+    bash -c "npm install &> /dev/null && npm i @sdkconsultoria/nestjs-base && npx cli"
 
 
 CYAN='\033[0;36m'

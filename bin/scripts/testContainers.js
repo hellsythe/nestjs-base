@@ -11,8 +11,8 @@ export default class TestContainers {
     async init() {
         await this.question();
         if(this.settings.testContainers){
-            // exec('npm install --save-dev testcontainers');
-            // exec('npm install @testcontainers/mongodb --save-dev');
+            await exec('npm install --save-dev testcontainers');
+            await exec('npm install @testcontainers/mongodb --save-dev');
         }
     }
 
