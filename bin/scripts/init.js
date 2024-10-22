@@ -18,7 +18,7 @@ export default class InitProyect {
     await new Database(settings).init();
     // await new FeatureFlags(settings).init();
     // await new Swagger(settings).init();
-    // await new TestContainers(settings).init();
+    await new TestContainers(settings).init();
     // await new Health(settings).init();
     await new Architecture(settings).init();
     await new Common().init();

@@ -1,0 +1,14 @@
+import { Inject } from '@nestjs/common';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+
+export class FindOne {
+  constructor(
+    @Inject('{{modelCamel}}Repository')
+    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+  ) {}
+
+  async execute(query: any): Promise<{{modelClass}}Model> {
+    return await this.{{modelCamel}}Repository.findOne(query);
+  }
+}

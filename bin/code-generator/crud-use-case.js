@@ -8,6 +8,10 @@ export default class CrudUseCase{
   async generate(args) {
     this.validate(args);
     this.copyAndReplaceUseCase('create', args[4]);
+    this.copyAndReplaceUseCase('update', args[4]);
+    this.copyAndReplaceUseCase('delete', args[4]);
+    this.copyAndReplaceUseCase('find', args[4]);
+    this.copyAndReplaceUseCase('find-one', args[4]);
     this.copyDtos(args[4]);
   }
 
@@ -16,6 +20,11 @@ export default class CrudUseCase{
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelClass}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelCamel}}', camelCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.ts`, '{{modelFile}}', kebabCase(entity));
+
+    await promises.cp(`${this.stubFolder}${useCase}.spec.ts.stub`, `${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`);
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelFile}}', kebabCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelCamel}}', camelCase(entity));
   }
 
   async copyDtos(entity){

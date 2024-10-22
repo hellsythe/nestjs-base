@@ -1,7 +1,7 @@
 export interface IGenericRepository<T> {
   find(query: any): Promise<T[]>;
-  findOne(item: any): Promise<T>;
+  findOne(query: any): Promise<T>;
   create(item: any): Promise<T>;
-  update(id: string, item: any): Promise<T>;
-  delete(id: string): Promise<T>;
+  update(query: any, item: any): Promise<T>;
+  delete(query: any): Promise<T>;
 }

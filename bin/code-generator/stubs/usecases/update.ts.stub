@@ -1,0 +1,21 @@
+import { Inject } from '@nestjs/common';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { Update{{modelClass}}Dto } from './dtos/update.dto';
+
+export class Update{{modelClass}} {
+  constructor(
+    @Inject('{{modelCamel}}Repository')
+    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+  ) {}
+
+  async execute(
+    query: any,
+    {{modelCamel}}: Update{{modelClass}}Dto,
+  ): Promise<{{modelClass}}Model> {
+    const current{{modelClass}} = await this.{{modelCamel}}Repository.findOne(query);
+    const new{{modelClass}} = { ...current{{modelClass}}, ...{{modelCamel}} };
+
+    return await this.{{modelCamel}}Repository.update(query, new{{modelClass}});
+  }
+}

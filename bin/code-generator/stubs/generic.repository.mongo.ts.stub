@@ -25,8 +25,8 @@ export abstract class GenericRepository<T, D> implements IGenericRepository<T> {
     return this.transform(await this.model.create(item));
   }
 
-  async update(find: any, item: any): Promise<T> {
-    const result = await this.model.findOneAndUpdate(find, item).exec();
+  async update(query: any, item: any): Promise<T> {
+    const result = await this.model.findOneAndUpdate(query, item).exec();
     if (!result) {
       throw new NotFoundException('item not found');
     }

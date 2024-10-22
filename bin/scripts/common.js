@@ -7,7 +7,9 @@ export default class Common {
     await promises.cp(process.cwd()+'/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/tsconfig.json', process.cwd()+'/tsconfig.json');
 
     await exec('npm i dotenv --save-dev && npm i @faker-js/faker --save-dev');
-    // await exec('npm link @sdkconsultoria/nestjs-base');
+    await exec('npm i @automock/jest --save-dev');
+    await exec('npm i @automock/adapters.nestjs --save-dev');
+    await exec('npm link @sdkconsultoria/nestjs-base');
   }
 
 }

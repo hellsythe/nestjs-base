@@ -1,0 +1,25 @@
+import { Inject } from '@nestjs/common';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+
+export class FindAll{{modelClass}} {
+  searchOptions: Array<string> = ['name', 'namespace', 'language', 'waba'];
+  constructor(
+    @Inject('{{modelCamel}}Repository')
+    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+  ) {}
+
+  async execute(query: any): Promise<Array<{{modelClass}}Model>> {
+    this.clearQuery(query);
+
+    return await this.{{modelCamel}}Repository.find(query);
+  }
+
+  private clearQuery(query: any): void {
+    Object.keys(query).forEach((key) => {
+      if (!this.searchOptions.includes(key)) {
+        delete query[key];
+      }
+    });
+  }
+}

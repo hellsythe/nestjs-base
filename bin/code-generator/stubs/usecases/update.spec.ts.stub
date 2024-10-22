@@ -1,0 +1,49 @@
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { TestBed } from '@automock/jest';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { Update{{modelClass}} } from './update';
+import { createFake{{modelClass}} } from '@test/factory/{{modelFile}}.factory';
+
+describe('update {{modelCamel}}', () => {
+  let update{{modelClass}}: Update{{modelClass}};
+  let {{modelCamel}}Repository: jest.Mocked<I{{modelClass}}Repository>;
+
+  beforeAll(async () => {
+    const { unit, unitRef } = TestBed.create(Update{{modelClass}}).compile();
+    update{{modelClass}} = unit;
+    {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
+  });
+
+  test('update {{modelCamel}}', async () => {
+    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+    const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
+
+    {{modelCamel}}FakeClone.name = 'edited';
+    {{modelCamel}}Repository.findOne.mockResolvedValue({{modelCamel}}Fake);
+    {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
+
+    await update{{modelClass}}.execute(
+      { name: {{modelCamel}}Fake.name },
+      {{modelCamel}}FakeClone,
+    );
+
+    expect({{modelCamel}}Repository.findOne).toHaveBeenCalled();
+    expect({{modelCamel}}Repository.update).toHaveBeenCalled();
+  });
+
+  test('update missing {{modelCamel}}', async () => {
+    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+    const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
+
+    {{modelCamel}}FakeClone.name = 'edited';
+    {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
+
+    await update{{modelClass}}.execute(
+      { name: {{modelCamel}}Fake.name },
+      {{modelCamel}}FakeClone,
+    );
+
+    expect({{modelCamel}}Repository.findOne).toHaveBeenCalled();
+    expect({{modelCamel}}Repository.update).toHaveBeenCalled();
+  });
+});

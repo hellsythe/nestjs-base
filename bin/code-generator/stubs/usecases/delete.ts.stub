@@ -1,0 +1,20 @@
+import { Inject } from '@nestjs/common';
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+
+export class Delete{{modelClass}} {
+  constructor(
+    @Inject('{{modelCamel}}Repository')
+    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+  ) {}
+
+  async execute(id: string): Promise<{{modelClass}}Model> {
+    const currentModel = await this.{{modelCamel}}Repository.findOne({ _id: id });
+
+    if (!currentModel) {
+      throw new Error('item not found');
+    }
+
+    return await this.{{modelCamel}}Repository.delete(id);
+  }
+}
