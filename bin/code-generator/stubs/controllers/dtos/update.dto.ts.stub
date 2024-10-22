@@ -1,0 +1,3 @@
+import { Update{{modelClass}}DtoInterface } from '@usecases/template/dtos/update.dto';
+
+export class Update{{modelClass}} implements Update{{modelClass}}DtoInterface {}

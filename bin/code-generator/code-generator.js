@@ -1,6 +1,7 @@
 import Entity from "./entity.js";
 import Repository from "./repository.js";
 import CrudUseCase from "./crud-use-case.js";
+import CrudApi from "./crud-api.js";
 
 export class CodeGenerator {
   async run(args) {
@@ -29,6 +30,7 @@ export class CodeGenerator {
         await new CrudUseCase().generate(args);
         break;
       case 'crud-api':
+        await new CrudApi().generate(args);
         break;
       default:
         throw new Error(`Parametro invalido: ${args[3]}`);

@@ -1,6 +1,0 @@
-import { {{entityClass}}Model } from '@entities/{{entityFile}}';
-import { Exclude, Expose } from 'class-transformer';
-
-export class {{entityClass}}Presenter {
-
-}

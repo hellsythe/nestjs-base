@@ -1,0 +1,3 @@
+import { Create{{modelClass}}DtoInterface } from '@usecases/template/dtos/create.dto';
+
+export class Create{{modelClass}}Dto implements Create{{modelClass}}DtoInterface {}

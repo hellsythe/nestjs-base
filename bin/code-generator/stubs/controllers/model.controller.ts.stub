@@ -1,0 +1,70 @@
+import { Controller, Post, Body, Inject } from '@nestjs/common';
+// import {
+//   ApiBadRequestResponse,
+//   ApiConsumes,
+//   ApiInternalServerErrorResponse,
+//   ApiOkResponse,
+//   ApiOperation,
+//   ApiProduces,
+//   ApiTags,
+//   ApiUnprocessableEntityResponse,
+// } from '@nestjs/swagger';
+import { CreateTemplate } from '@usecases/template/create';
+import { CreateTemplateDto } from './dtos/create.dto';
+// import { ErrorResponse } from '@infra/errors/error';
+import { TemplatePresenter } from './template.presenter';
+import { TemplateModel } from '@entities/template.model';
+// import { AppLoggerService } from '@infra/logging/app-logger.service';
+
+@Controller('templates')
+// @ApiTags('Templates')
+// @ApiProduces('application/json')
+// @ApiInternalServerErrorResponse({
+//   description: 'Server Error',
+//   type: ErrorResponse,
+// })
+export class TemplateController {
+  constructor(
+    @Inject()
+    private readonly createTemplate: CreateTemplate,
+    // private readonly logger: AppLoggerService,
+  ) {
+    // logger.setContext(TemplateController.name);
+  }
+
+  @Post()
+  // @ApiOperation({
+  //   summary: 'Creates new template',
+  // })
+  // @ApiConsumes('application/json')
+  // @ApiOkResponse({
+  //   description: 'Created',
+  //   type: CreateTemplateDto,
+  //   status: 201,
+  // })
+  // @ApiBadRequestResponse({
+  //   description: 'Client error',
+  //   type: ErrorResponse,
+  // })
+  // @ApiUnprocessableEntityResponse({
+  //   description: 'Client Error',
+  //   type: ErrorResponse,
+  // })
+  async create(
+    @Body() createTemplate: CreateTemplateDto,
+  ): Promise<TemplatePresenter> {
+    // const methodSignature = this.create.name;
+    // this.logger.log(
+    //   `Entering ${methodSignature} - complex_id: ${createTemplate.namespace}:${createTemplate.name}:${createTemplate.language}`,
+    // );
+
+    const template = await this.createTemplate.execute(createTemplate);
+    const resource = new TemplatePresenter(template);
+
+    // this.logger.log(
+    //   `Exiting ${methodSignature} - template_id: ${resource?.template_id}`,
+    // );
+
+    return resource;
+  }
+}

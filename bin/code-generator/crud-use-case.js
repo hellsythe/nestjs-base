@@ -7,12 +7,12 @@ export default class CrudUseCase{
 
   async generate(args) {
     this.validate(args);
-    this.copyAndReplaceUseCase('create', args[4]);
-    this.copyAndReplaceUseCase('update', args[4]);
-    this.copyAndReplaceUseCase('delete', args[4]);
-    this.copyAndReplaceUseCase('find', args[4]);
-    this.copyAndReplaceUseCase('find-one', args[4]);
-    this.copyDtos(args[4]);
+    await this.copyAndReplaceUseCase('create', args[4]);
+    await this.copyAndReplaceUseCase('update', args[4]);
+    await this.copyAndReplaceUseCase('delete', args[4]);
+    await this.copyAndReplaceUseCase('find', args[4]);
+    await this.copyAndReplaceUseCase('find-one', args[4]);
+    await this.copyDtos(args[4]);
   }
 
   async copyAndReplaceUseCase(useCase, entity){

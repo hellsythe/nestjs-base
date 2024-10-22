@@ -1,0 +1,10 @@
+import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+// import { Exclude, Expose } from 'class-transformer';
+
+export class {{modelClass}}Presenter {
+  constructor(partial: Partial<{{modelClass}}Model>) {
+    Object.assign(this, partial);
+  }
+
+{{properties}}
+}
