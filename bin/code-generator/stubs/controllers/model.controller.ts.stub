@@ -1,70 +1,157 @@
-import { Controller, Post, Body, Inject } from '@nestjs/common';
-// import {
-//   ApiBadRequestResponse,
-//   ApiConsumes,
-//   ApiInternalServerErrorResponse,
-//   ApiOkResponse,
-//   ApiOperation,
-//   ApiProduces,
-//   ApiTags,
-//   ApiUnprocessableEntityResponse,
-// } from '@nestjs/swagger';
-import { CreateTemplate } from '@usecases/template/create';
-import { CreateTemplateDto } from './dtos/create.dto';
-// import { ErrorResponse } from '@infra/errors/error';
-import { TemplatePresenter } from './template.presenter';
-import { TemplateModel } from '@entities/template.model';
-// import { AppLoggerService } from '@infra/logging/app-logger.service';
+import {
+  Controller,
+  Post,
+  Body,
+  Inject,
+  Get,
+  Param,
+  Put,
+  Delete,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiConsumes,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiProduces,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Create{{modelClass}} } from '@usecases/{{modelFile}}/create';
+import { Update{{modelClass}} } from '@usecases/{{modelFile}}/update';
+import { Delete{{modelClass}} } from '@usecases/{{modelFile}}/delete';
+import { FindOne } from '@usecases/{{modelFile}}/find-one';
+import { FindAll{{modelClass}} } from '@usecases/{{modelFile}}/find';
+import { Create{{modelClass}}Dto } from './dtos/create.dto';
+import { {{modelClass}}Presenter } from './{{modelFile}}.presenter';
+import { ErrorResponse } from '@infrastructure/errors/error';
+import { Update{{modelClass}}Dto } from './dtos/update.dto';
 
-@Controller('templates')
-// @ApiTags('Templates')
-// @ApiProduces('application/json')
-// @ApiInternalServerErrorResponse({
-//   description: 'Server Error',
-//   type: ErrorResponse,
-// })
-export class TemplateController {
+@Controller('{{modelCamel}}')
+@ApiTags('{{modelClass}}')
+@ApiProduces('application/json')
+@ApiInternalServerErrorResponse({
+  description: 'Server Error',
+  type: ErrorResponse,
+})
+export class {{modelClass}}Controller {
   constructor(
     @Inject()
-    private readonly createTemplate: CreateTemplate,
-    // private readonly logger: AppLoggerService,
-  ) {
-    // logger.setContext(TemplateController.name);
-  }
+    private readonly create{{modelClass}}: Create{{modelClass}},
+    private readonly findOne: FindOne,
+    private readonly findAll{{modelClass}}: FindAll{{modelClass}},
+    private readonly update{{modelClass}}: Update{{modelClass}},
+    private readonly delete{{modelClass}}: Delete{{modelClass}},
+  ) {}
 
   @Post()
-  // @ApiOperation({
-  //   summary: 'Creates new template',
-  // })
-  // @ApiConsumes('application/json')
-  // @ApiOkResponse({
-  //   description: 'Created',
-  //   type: CreateTemplateDto,
-  //   status: 201,
-  // })
-  // @ApiBadRequestResponse({
-  //   description: 'Client error',
-  //   type: ErrorResponse,
-  // })
-  // @ApiUnprocessableEntityResponse({
-  //   description: 'Client Error',
-  //   type: ErrorResponse,
-  // })
+  @ApiOperation({
+    summary: 'Creates a {{modelCamel}}',
+  })
+  @ApiConsumes('application/json')
+  @ApiOkResponse({
+    description: 'Created',
+    type: Create{{modelClass}}Dto,
+    status: 201,
+  })
+  @ApiBadRequestResponse({
+    description: 'Client error',
+    type: ErrorResponse,
+  })
   async create(
-    @Body() createTemplate: CreateTemplateDto,
-  ): Promise<TemplatePresenter> {
-    // const methodSignature = this.create.name;
-    // this.logger.log(
-    //   `Entering ${methodSignature} - complex_id: ${createTemplate.namespace}:${createTemplate.name}:${createTemplate.language}`,
-    // );
+    @Body() create{{modelClass}}: Create{{modelClass}}Dto,
+  ): Promise<{{modelClass}}Presenter> {
+    const {{modelCamel}} = await this.create{{modelClass}}.execute(create{{modelClass}});
+    return new {{modelClass}}Presenter({{modelCamel}});
+  }
 
-    const template = await this.createTemplate.execute(createTemplate);
-    const resource = new TemplatePresenter(template);
+  @Put('/:id')
+  @ApiOperation({
+    summary: 'Update a {{modelCamel}}',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    format: 'uuid',
+    required: true,
+  })
+  @ApiConsumes('application/json')
+  @ApiOkResponse({
+    description: 'Updated',
+    type: Update{{modelClass}}Dto,
+    status: 200,
+  })
+  @ApiBadRequestResponse({
+    description: 'Client error',
+    type: ErrorResponse,
+  })
+  async updateByComplexId(
+    @Param('id') id: string,
+    @Body() update{{modelClass}}: Update{{modelClass}}Dto,
+  ): Promise<{{modelClass}}Presenter> {
+    const {{modelCamel}} = await this.update{{modelClass}}.execute(
+      { _id: id },
+      update{{modelClass}},
+    );
+    return new {{modelClass}}Presenter({{modelCamel}});
+  }
 
-    // this.logger.log(
-    //   `Exiting ${methodSignature} - template_id: ${resource?.template_id}`,
-    // );
+  @Delete('/:id')
+  @ApiOperation({
+    summary: 'Delete a {{modelCamel}}',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    format: 'uuid',
+    required: true,
+  })
+  @ApiConsumes('application/json')
+  @ApiOkResponse({
+    description: 'Delete',
+    status: 201,
+  })
+  @ApiNotFoundResponse({ description: 'Not Found', type: ErrorResponse })
+  async delete(@Param('id') id: string): Promise<void> {
+    await this.delete{{modelClass}}.execute(id);
+  }
 
-    return resource;
+  @Get('/')
+  @ApiOperation({
+    summary: 'Gets {{modelCamel}}s',
+  })
+  @ApiOkResponse({
+    description: 'Success',
+    type: Array<{{modelClass}}Presenter>,
+    status: 200,
+  })
+  async getAll(@Query() query): Promise<any> {
+    const result = await this.findAll{{modelClass}}.execute(query);
+    return {
+      data: result.map(({{modelCamel}}) => new {{modelClass}}Presenter({{modelCamel}})),
+    };
+  }
+
+  @Get('/:id')
+  @ApiOperation({
+    summary: 'Gets a {{modelCamel}} details',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+    format: 'uuid',
+    required: true,
+  })
+  @ApiOkResponse({
+    description: 'Success',
+    type: {{modelClass}}Presenter,
+    status: 200,
+  })
+  @ApiNotFoundResponse({ description: 'Not Found', type: ErrorResponse })
+  async getCharacter(@Param('id') id: string): Promise<{{modelClass}}Presenter> {
+    return new {{modelClass}}Presenter(await this.findOne.execute({ _id: id }));
   }
 }

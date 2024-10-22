@@ -29,19 +29,25 @@ export default class CrudApi{
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{modelClass}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{modelCamel}}', camelCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{properties}}', propierties.join('\n'));
-
-    console.log( `${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`);
-
   }
 
   async copyDtos(entity){
-    const propierties = await this.loadProperties(entity);
-    await promises.cp(`${this.stubFolder}dtos/create.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/create.dto.ts`);
-    await promises.cp(`${this.stubFolder}dtos/update.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/update.dto.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/create.dto.ts`, '{{modelClass}}', pascalCase(entity));
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/create.dto.ts`, '{}', '{\n'+propierties.join('\n')+'\n}');
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/update.dto.ts`, '{{modelClass}}', pascalCase(entity));
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/update.dto.ts`, '{}', '{\n'+propierties.join('\n')+'\n}');
+    const propierties = this.addDtoPropertiesToDto(await this.loadProperties(entity));
+    await this.copyDto(entity, 'create', propierties);
+    await this.copyDto(entity, 'update', propierties);
+  }
+
+  async copyDto(entity, dto, propierties){
+    await promises.cp(`${this.stubFolder}dtos/${dto}.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`);
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{}', '{\n'+propierties.join('\n\n')+'\n}');
+  }
+
+  addDtoPropertiesToDto(propierties)
+  {
+    return propierties.map(item => {
+      return '  @ApiProperty()\n  @IsNotEmpty()\n'+item;
+    })
   }
 
   validate(args) {

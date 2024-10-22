@@ -16,6 +16,8 @@ export class Update{{modelClass}} {
     const current{{modelClass}} = await this.{{modelCamel}}Repository.findOne(query);
     const new{{modelClass}} = { ...current{{modelClass}}, ...{{modelCamel}} };
 
-    return await this.{{modelCamel}}Repository.update(query, new{{modelClass}});
+    await this.{{modelCamel}}Repository.update(query, new{{modelClass}});
+
+    return this.{{modelCamel}}Repository.findOne(query);
   }
 }

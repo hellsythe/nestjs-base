@@ -1,3 +1,5 @@
 import { Update{{modelClass}}DtoInterface } from '@usecases/template/dtos/update.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
-export class Update{{modelClass}} implements Update{{modelClass}}DtoInterface {}
+export class Update{{modelClass}}Dto implements Update{{modelClass}}DtoInterface {}
