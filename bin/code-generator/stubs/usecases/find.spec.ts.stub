@@ -18,11 +18,11 @@ describe('find {{modelCamel}}', () => {
     const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
     {{modelCamel}}Repository.find.mockResolvedValue([{{modelCamel}}Fake]);
 
-    const foundAll = await find.execute({ name: {{modelCamel}}Fake.name });
+    const foundAll = await find.execute({ {{property}}: {{modelCamel}}Fake.{{property}} });
 
     expect(foundAll.length).toBe(1);
     expect({{modelCamel}}Repository.find).toHaveBeenCalledWith({
-      name: {{modelCamel}}Fake.name,
+      {{property}}: {{modelCamel}}Fake.{{property}},
     });
   });
 });

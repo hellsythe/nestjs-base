@@ -18,12 +18,12 @@ describe('update {{modelCamel}}', () => {
     const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
     const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
 
-    {{modelCamel}}FakeClone.name = 'edited';
+    {{modelCamel}}FakeClone.{{property}} = 'edited';
     {{modelCamel}}Repository.findOne.mockResolvedValue({{modelCamel}}Fake);
     {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
 
     await update{{modelClass}}.execute(
-      { name: {{modelCamel}}Fake.name },
+      { {{property}}: {{modelCamel}}Fake.{{property}} },
       {{modelCamel}}FakeClone,
     );
 
@@ -35,11 +35,11 @@ describe('update {{modelCamel}}', () => {
     const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
     const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
 
-    {{modelCamel}}FakeClone.name = 'edited';
+    {{modelCamel}}FakeClone.{{property}} = 'edited';
     {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
 
     await update{{modelClass}}.execute(
-      { name: {{modelCamel}}Fake.name },
+      { {{property}}: {{modelCamel}}Fake.{{property}} },
       {{modelCamel}}FakeClone,
     );
 

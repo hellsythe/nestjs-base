@@ -18,11 +18,11 @@ describe('find {{modelCamel}}', () => {
     const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
     {{modelCamel}}Repository.findOne.mockResolvedValue({{modelCamel}}Fake);
 
-    const found{{modelClass}} = await findOne.execute({ name: {{modelCamel}}Fake.name });
+    const found{{modelClass}} = await findOne.execute({ {{property}}: {{modelCamel}}Fake.{{property}} });
 
-    expect(found{{modelClass}}.name).toEqual({{modelCamel}}Fake.name);
+    expect(found{{modelClass}}.{{property}}).toEqual({{modelCamel}}Fake.{{property}});
     expect({{modelCamel}}Repository.findOne).toHaveBeenCalledWith({
-      name: {{modelCamel}}Fake.name,
+      {{property}}: {{modelCamel}}Fake.{{property}},
     });
   });
 });
