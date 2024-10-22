@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
 import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
-import { Update{{modelClass}}Dto } from './dtos/update.dto';
+import { Update{{modelClass}}DtoInterface } from './dtos/update.dto';
 
 export class Update{{modelClass}} {
   constructor(
@@ -11,7 +11,7 @@ export class Update{{modelClass}} {
 
   async execute(
     query: any,
-    {{modelCamel}}: Update{{modelClass}}Dto,
+    {{modelCamel}}: Update{{modelClass}}DtoInterface,
   ): Promise<{{modelClass}}Model> {
     const current{{modelClass}} = await this.{{modelCamel}}Repository.findOne(query);
     const new{{modelClass}} = { ...current{{modelClass}}, ...{{modelCamel}} };
