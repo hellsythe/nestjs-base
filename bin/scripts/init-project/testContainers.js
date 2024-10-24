@@ -1,34 +1,9 @@
-import { select } from '@inquirer/prompts';
-import { exec } from 'child_process';
+import { BaseScript } from './../base-script.js'
 
-export default class TestContainers {
-    settings;
-
-    constructor(settings) {
-        this.settings = settings;
-    }
-
+export default class TestContainers extends BaseScript {
     async init() {
-        await this.question();
         if(this.settings.testContainers){
-            await exec('npm install --save-dev testcontainers');
+            await this.remplazeEntityInFile('.env', 'TESTCONTAINERS=false', 'TESTCONTAINERS=true');
         }
     }
-
-    async question() {
-        this.settings.testContainers = await select({
-            message: '¿Deseas implementar TestContainers?',
-            choices: [
-                {
-                    name: 'No',
-                    value: false,
-                },
-                {
-                    name: 'Si',
-                    value: true,
-                }
-            ],
-        });
-    }
-
 }

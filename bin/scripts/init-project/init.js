@@ -16,8 +16,8 @@ export default class InitProyect {
     await new Dockerize(settings).init();
     await new Database(settings).init();
     await new FeatureFlags(settings).init();
-    // await new TestContainers(settings).init();
-    // await new Health(settings).init();
+    await new TestContainers(settings).init();
+    await new Health(settings).init();
   }
 }
 

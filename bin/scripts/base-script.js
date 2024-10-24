@@ -1,4 +1,6 @@
 import * as fs from 'node:fs/promises';
+import * as util  from 'node:util';
+import { exec as execNonPromise } from 'child_process';
 
 export class BaseScript {
   settings;
@@ -45,4 +47,8 @@ export class BaseScript {
     await this.remplazeEntityInFile(file, search, search+newContent);
   }
 
+  async execute(command){
+    const exec = util.promisify(execNonPromise);
+    await exec(command);
+  }
 }

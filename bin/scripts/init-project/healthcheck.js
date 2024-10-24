@@ -1,34 +1,9 @@
-import { select } from '@inquirer/prompts';
-import { exec } from 'child_process';
+import { BaseScript } from "./../base-script.js";
 
-export default class Health {
-    settings;
-
-    constructor(settings) {
-        this.settings = settings;
-    }
-
+export default class Health extends BaseScript {
     async init() {
-        await this.question();
-        if(this.settings.healthCheck){
-            await exec('npm install --save @nestjs/terminus');
+        if(this.settings.healthPage){
+            await this.execute('npm install --save @nestjs/terminus')
         }
     }
-
-    async question() {
-        this.settings.healthCheck = await select({
-            message: '¿Deseas implementar una página de health?',
-            choices: [
-                {
-                    name: 'Si',
-                    value: true,
-                },
-                {
-                    name: 'No',
-                    value: false,
-                }
-            ],
-        });
-    }
-
 }

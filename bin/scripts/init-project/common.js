@@ -1,6 +1,5 @@
 import { promises } from "fs";
 import { BaseScript } from "./../base-script.js";
-import { exec } from 'child_process';
 
 export default class Common extends BaseScript {
   async init() {
@@ -20,13 +19,14 @@ export default class Common extends BaseScript {
   }
 
   async installCommonLibraries(){
-    // await exec('npm i dotenv --save-dev');
-    // await exec('npm i @faker-js/faker --save-dev');
-    // await exec('npm i @automock/jest --save-dev');
-    // await exec('npm i @automock/adapters.nestjs --save-dev');
-    // await exec('npm i --save @nestjs/config');
-    // await exec('npm install --save @nestjs/swagger');
-    // await exec('npm i --save class-validator class-transformer');
-    // await exec('npm link @sdkconsultoria/nestjs-base');
+    await this.execute('npm install --save-dev testcontainers');
+    await this.execute('npm i dotenv --save-dev');
+    await this.execute('npm i @faker-js/faker --save-dev');
+    await this.execute('npm i @automock/jest --save-dev');
+    await this.execute('npm i @automock/adapters.nestjs --save-dev');
+    await this.execute('npm i --save @nestjs/config');
+    await this.execute('npm install --save @nestjs/swagger');
+    await this.execute('npm i --save class-validator class-transformer');
+    await this.execute('npm link @sdkconsultoria/nestjs-base');
   }
 }

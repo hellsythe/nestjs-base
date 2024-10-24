@@ -92,7 +92,7 @@ export const config = [
   },
   {
     text: '¿Deseas implementar TestContainers?',
-    value: 'testcontainers',
+    value: 'testContainers',
     choices: [
       {
         name: 'No',

@@ -1,4 +1,3 @@
-import { exec } from 'child_process';
 import { BaseScript } from './../base-script.js'
 
 export default class FeatureFlags extends BaseScript {
@@ -10,8 +9,9 @@ export default class FeatureFlags extends BaseScript {
 
             await this.insertInNewLineAfter('src/infrastructure/infrastructure.module.ts', "import { ConfigModule } from '@nestjs/config';", "import { UnleashModule } from './services/unleash/unleash.module';");
             await this.insertContentAfter('src/infrastructure/infrastructure.module.ts', 'ConfigModule.forRoot\(\)', ', UnleashModule');
-            await exec('npm i unleash-client');
+            await this.execute('npm i unleash-client');
         }
+        await this.remplazeEntityInFile('.env', '{{feature_flags}}', '');
     }
 
 }
