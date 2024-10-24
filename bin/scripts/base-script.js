@@ -1,5 +1,5 @@
 import * as fs from 'node:fs/promises';
-import * as util  from 'node:util';
+import util from 'util';
 import { exec as execNonPromise } from 'child_process';
 
 export class BaseScript {

@@ -16,6 +16,7 @@ export default class Database extends BaseScript {
                 await this.copyFromArchitectureFolder('infrastructure/db/mongo/repositories/generic.repository.mongo.ts');
                 await this.insertInNewLineAfter('src/infrastructure/infrastructure.module.ts', "import { ConfigModule } from '@nestjs/config';", "import { DbMongoModule } from './db/db-mongo.module';");
                 await this.insertContentAfter('src/infrastructure/infrastructure.module.ts', 'ConfigModule.forRoot\(\)', ', DbMongoModule');
+                console.log('Instalando dependencia @nestjs/mongoose mongoose...');
                 await this.execute('npm i @nestjs/mongoose mongoose');
                 break;
             default:

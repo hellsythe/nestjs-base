@@ -6,11 +6,11 @@ import TestContainers from './testContainers.js';
 import Health from './healthcheck.js'
 import Common from './common.js'
 import {Config} from './config.js';
+import Dependencies from './dependencies.js';
 
 export default class InitProyect {
   async run(){
     const settings = await new Config().init();
-
     await new Common(settings).init();
     await new DevContainers(settings).init();
     await new Dockerize(settings).init();
@@ -18,6 +18,7 @@ export default class InitProyect {
     await new FeatureFlags(settings).init();
     await new TestContainers(settings).init();
     await new Health(settings).init();
+    await new Dependencies(settings).init();
   }
 }
 
