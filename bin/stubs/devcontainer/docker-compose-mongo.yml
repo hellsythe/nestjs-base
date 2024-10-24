@@ -1,15 +1,3 @@
-services:
-
-  node:
-    image: node
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    networks:
-      - servers
-    volumes:
-      - ./:/app
-    ports:
-      - 3000:3000
-    working_dir: /app
 
   mongo:
     image: mongo
@@ -32,7 +20,3 @@ services:
       ME_CONFIG_BASICAUTH: false
     networks:
       - servers
-
-networks:
-  servers:
-    driver: bridge

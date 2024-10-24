@@ -1,16 +1,6 @@
 services:
-
-  node:
-    image: node
-    command: /bin/sh -c "while sleep 1000; do :; done"
-    networks:
-      - servers
-    volumes:
-      - ./:/app
-    ports:
-      - 3000:3000
-    working_dir: /app
-
+{{node}}
+{{mongo}}
 networks:
   servers:
     driver: bridge

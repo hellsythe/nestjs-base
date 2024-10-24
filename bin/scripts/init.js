@@ -1,25 +1,24 @@
-import Settings from './settings.js';
 import DevContainers from './devcontainers.js';
 import Database from './database.js';
 import FeatureFlags from './feature-flag.js';
-import NodeContainer from './node.js';
+import Dockerize from './dockerize.js';
 import TestContainers from './testContainers.js';
-import Architecture from './architecture.js';
 import Health from './healthcheck.js'
 import Common from './common.js'
+import {Config} from './config.js';
 
 export default class InitProyect {
   async run(){
-    console.info('Configurando tu proyecto...');
-    const settings = new Settings();
+    const settings = await new Config().init();
+
     await new DevContainers(settings).init();
-    await new NodeContainer(settings).init();
+    await new Dockerize(settings).init();
     await new Database(settings).init();
-    // await new FeatureFlags(settings).init();
-    await new TestContainers(settings).init();
-    // await new Health(settings).init();
-    await new Architecture(settings).init();
-    await new Common().init();
+    // // await new FeatureFlags(settings).init();
+    // await new TestContainers(settings).init();
+    // // await new Health(settings).init();
+    // await new Architecture(settings).init();
+    await new Common(settings).init();
   }
 }
 
