@@ -1,0 +1,33 @@
+import { Global, Module } from '@nestjs/common';
+import { UnleashService } from './unleash.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { startUnleash } from 'unleash-client';
+
+@Global()
+@Module({
+  imports: [ConfigModule.forRoot()],
+  providers: [
+    {
+      provide: UnleashService,
+      useFactory: async (
+        configService: ConfigService,
+      ): Promise<UnleashService> => {
+        const unleashClient = await startUnleash({
+          url: configService.getOrThrow('UNLEASH_URL'),
+          appName: configService.getOrThrow('UNLEASH_APP_NAME'),
+          instanceId: configService.getOrThrow('UNLEASH_INSTANCE_ID'),
+          refreshInterval: parseInt(
+            configService.getOrThrow('UNLEASH_REFRESH_INTERVAL'),
+          ),
+          metricsInterval: parseInt(
+            configService.getOrThrow('UNLEASH_METRICS_INTERVAL'),
+          ),
+        });
+        return new UnleashService(unleashClient);
+      },
+      inject: [ConfigService],
+    },
+  ],
+  exports: [UnleashService],
+})
+export class UnleashModule {}

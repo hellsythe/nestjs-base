@@ -10,8 +10,7 @@ export class BaseScript {
 
   async remplazeEntityInFile(file, search, replace){
     const contents = await fs.readFile(process.cwd()+'/'+file, 'utf8');
-    const regExp = new RegExp(search, 'gi')
-    const updated = contents.replace(regExp, replace)
+    const updated = contents.replace(search, replace)
 
     await fs.writeFile(process.cwd()+'/'+file, updated, 'utf-8', err2 => {
       if (err2) {
@@ -27,6 +26,23 @@ export class BaseScript {
   async copyFromArchitectureFolder(origin)
   {
     await fs.cp(this.path+'template/'+this.settings.codeTemplate+'/'+origin+'.stub', process.cwd()+'/src/'+origin);
-
   }
+
+  async copyFolderFromArchitectureFolder(origin)
+  {
+    const files = await fs.readdir(this.path+'template/'+this.settings.codeTemplate+'/'+origin);
+
+    for (let index = 0; index < files.length; index++) {
+      await fs.cp(this.path+'template/'+this.settings.codeTemplate+'/'+origin+files[index], process.cwd()+'/src/'+origin+files[index].replace('.stub', ''));
+    }
+  }
+
+  async insertInNewLineAfter(file, search, newContent){
+    await this.remplazeEntityInFile(file, search, search+'\n'+newContent);
+  }
+
+  async insertContentAfter(file, search, newContent){
+    await this.remplazeEntityInFile(file, search, search+newContent);
+  }
+
 }

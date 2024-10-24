@@ -1,6 +1,6 @@
 import { TestBed } from '@automock/jest';
 import { Context, Unleash } from 'unleash-client';
-import { UnleashService } from './unleash.service.stub';
+import { UnleashService } from './unleash.service';
 
 describe('UnleashService', () => {
   test('Can get flag - w/o userId', async () => {

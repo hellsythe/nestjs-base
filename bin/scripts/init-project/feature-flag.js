@@ -6,7 +6,11 @@ export default class FeatureFlags extends BaseScript {
         if(this.settings.featureFlags){
             const env = await this.loadContenFromFile(this.path + '.env.feature-flag');
             await this.remplazeEntityInFile('.env', '{{feature_flags}}', env);
-            // await exec('npm i unleash-client');
+            await this.copyFolderFromArchitectureFolder('infrastructure/services/unleash/');
+
+            await this.insertInNewLineAfter('src/infrastructure/infrastructure.module.ts', "import { ConfigModule } from '@nestjs/config';", "import { UnleashModule } from './services/unleash/unleash.module';");
+            await this.insertContentAfter('src/infrastructure/infrastructure.module.ts', 'ConfigModule.forRoot\(\)', ', UnleashModule');
+            await exec('npm i unleash-client');
         }
     }
 
