@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 
 export class BaseScript {
   settings;
-  path = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/';
+  path = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/stubs/';
 
   constructor(settings) {
     this.settings = settings;
@@ -22,5 +22,11 @@ export class BaseScript {
 
   async loadContenFromFile(file) {
     return await fs.readFile(file,  { encoding: 'utf8' });
+  }
+
+  async copyFromArchitectureFolder(origin)
+  {
+    await fs.cp(this.path+'template/'+this.settings.codeTemplate+'/'+origin+'.stub', process.cwd()+'/src/'+origin);
+
   }
 }

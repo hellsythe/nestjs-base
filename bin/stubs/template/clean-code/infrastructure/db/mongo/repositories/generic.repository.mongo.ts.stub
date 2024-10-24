@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { IGenericRepository } from '@usecases/common/generic.repository.interface';
 import { Model } from 'mongoose';
 
-export abstract class GenericRepository<T, D> implements IGenericRepository<T> {
+export abstract class GenericRepositoryMongo<T, D> implements IGenericRepository<T> {
   protected model: Model<D>;
 
   async find(query: any): Promise<T[]> {

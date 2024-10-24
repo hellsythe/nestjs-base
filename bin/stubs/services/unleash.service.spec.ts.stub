@@ -1,0 +1,47 @@
+import { TestBed } from '@automock/jest';
+import { Context, Unleash } from 'unleash-client';
+import { UnleashService } from './unleash.service.stub';
+
+describe('UnleashService', () => {
+  test('Can get flag - w/o userId', async () => {
+    // arrange
+    const { unit, unitRef } = TestBed.create(UnleashService).compile();
+    const unleashClient = unitRef.get(Unleash);
+
+    jest.mocked(unleashClient.isEnabled).mockReturnValue(true);
+
+    // act
+    const val = unit.isEnabled('use-mongo-ds', false);
+    unit.onModuleDestroy();
+
+    // assert
+    expect(val).toEqual(true);
+    expect(unleashClient.isEnabled).toHaveBeenCalledWith(
+      'use-mongo-ds',
+      undefined,
+      false,
+    );
+    expect(unleashClient.destroy).toHaveBeenCalled();
+  });
+
+  test('Can get flag - with userId', async () => {
+    // arrange
+    const { unit, unitRef } = TestBed.create(UnleashService).compile();
+    const unleashClient = unitRef.get(Unleash);
+
+    jest.mocked(unleashClient.isEnabled).mockReturnValue(true);
+
+    // act
+    const val = unit.isEnabled('use-mongo-ds', false, 'user-1234');
+    unit.onModuleDestroy();
+
+    // assert
+    expect(val).toEqual(true);
+    expect(unleashClient.isEnabled).toHaveBeenCalledWith(
+      'use-mongo-ds',
+      { userId: 'user-1234' } satisfies Context,
+      false,
+    );
+    expect(unleashClient.destroy).toHaveBeenCalled();
+  });
+});

@@ -11,14 +11,13 @@ export default class InitProyect {
   async run(){
     const settings = await new Config().init();
 
+    await new Common(settings).init();
     await new DevContainers(settings).init();
     await new Dockerize(settings).init();
     await new Database(settings).init();
-    // // await new FeatureFlags(settings).init();
+    await new FeatureFlags(settings).init();
     // await new TestContainers(settings).init();
-    // // await new Health(settings).init();
-    // await new Architecture(settings).init();
-    await new Common(settings).init();
+    // await new Health(settings).init();
   }
 }
 

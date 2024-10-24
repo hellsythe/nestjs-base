@@ -1,5 +1,5 @@
 import { promises } from "fs";
-import { BaseScript } from "./base-script.js";
+import { BaseScript } from "./../base-script.js";
 import { exec } from 'child_process';
 
 export default class Common extends BaseScript {
@@ -9,9 +9,8 @@ export default class Common extends BaseScript {
   }
 
   async copyCommonFiles(){
-    await promises.cp(this.path+'/stubs/test/', process.cwd()+'test', {recursive: true});
-    await promises.cp(this.path+'/stubs/tsconfig.json', process.cwd()+'/tsconfig.json');
-    await promises.cp(this.path+'/stubs/.env', process.cwd()+'/.env');
+    await promises.cp(this.path+'tsconfig.json', process.cwd()+'/tsconfig.json');
+    await promises.cp(this.path+'.env', process.cwd()+'/.env');
   }
 
   async installCommonLibraries(){

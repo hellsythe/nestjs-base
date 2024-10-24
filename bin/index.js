@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import InitProyect from './scripts/init.js';
+import InitProyect from './scripts/init-project/init.js';
 import { CodeGenerator } from './code-generator/code-generator.js';
 
 const args = process.argv;

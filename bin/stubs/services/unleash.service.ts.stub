@@ -1,0 +1,38 @@
+import { AppLoggerService } from '@infra/logging/app-logger.service';
+import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Unleash } from 'unleash-client';
+
+@Injectable()
+export class UnleashService implements OnModuleDestroy {
+  constructor(
+    private readonly unleash: Unleash,
+    private readonly logger: AppLoggerService,
+  ) {
+    this.logger.setContext(UnleashService.name);
+  }
+
+  onModuleDestroy() {
+    this.unleash.destroy();
+  }
+
+  isEnabled(
+    featureName: string,
+    fallbackValue: boolean,
+    userId?: string,
+  ): boolean {
+    const methodSignature = this.isEnabled.name;
+    this.logger.debug(
+      `Entering ${methodSignature} - featureName: ${featureName}, userId: ${userId}`,
+    );
+
+    const enabled = this.unleash.isEnabled(
+      featureName,
+      userId ? { userId } : undefined,
+      fallbackValue,
+    );
+
+    this.logger.debug(`Exiting ${methodSignature} - enabled: ${enabled}`);
+
+    return enabled;
+  }
+}
