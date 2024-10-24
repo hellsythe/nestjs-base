@@ -1,5 +1,4 @@
 import { promises } from "fs";
-import { kebabCase, remplazeInFile, pascalCase, camelCase, processLineByLine } from './utils.js';
 
 export default class CrudUseCase{
   stubFolder = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/usecases/';

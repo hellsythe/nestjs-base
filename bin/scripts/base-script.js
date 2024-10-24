@@ -51,4 +51,35 @@ export class BaseScript {
     const exec = util.promisify(execNonPromise);
     await exec(command);
   }
+
+  validate(args) {
+    if (args[4] == undefined) {
+      throw new Error('El nombre de la entidad no puede estar vacio');
+    }
+  }
+
+  async copyFileFromArchitectureFolderAndRename(origin, entity)
+  {
+    const newFilename = origin.replace('entity', this.kebabCase(entity));
+    await fs.cp(this.path+'template/clean-code/'+origin+'.stub', process.cwd()+'/src/'+newFilename);
+  }
+
+  kebabCase(string) {
+    return string.replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
+  }
+
+  camelCase(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
+
+  pascalCase(str) {
+    return str
+      .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+      .map((x) => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase())
+      .join("");
+  }
 }
