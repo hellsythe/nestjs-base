@@ -18,7 +18,5 @@ export default class Dependencies extends BaseScript {
     await this.execute('npm install --save @nestjs/swagger');
     console.log('Instalando dependencia class-validator class-transformer...');
     await this.execute('npm i --save class-validator class-transformer');
-
-    await this.execute('npm link @sdkconsultoria/nestjs-base');
   }
 }

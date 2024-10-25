@@ -15,7 +15,7 @@ rm .git -rf
 git init -q
 git add . &> /dev/null
 git commit -m "Initial commit" &> /dev/null
-rm src/app.services.ts
+rm src/app.service.ts
 rm src/app.controller.ts
 rm src/app.controller.spec.ts
 
