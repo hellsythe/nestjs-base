@@ -13,12 +13,12 @@ export class BaseScript {
     this.settings = settings;
   }
 
+  async getFileContent(file) {
+    return await fs.readFile(process.cwd() + '/' + file, 'utf8');
+  }
   async remplazeEntityInFile(file, search, replace) {
     const contents = await fs.readFile(process.cwd() + '/' + file, 'utf8');
-    if(!search.includes('(')){
-      search = new RegExp(search, "g");
-    }
-    const updated = contents.replace(search, replace);
+    const updated = contents.replaceAll(search, replace);
 
     await fs.writeFile(process.cwd() + '/' + file, updated, 'utf-8', err2 => {
       if (err2) {
