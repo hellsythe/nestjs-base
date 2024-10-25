@@ -4,17 +4,17 @@ import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.in
 
 export class Delete{{pascalCase}} {
   constructor(
-    @Inject('{{modelCamel}}Repository')
-    private {{modelCamel}}Repository: I{{pascalCase}}Repository,
+    @Inject('{{camelCase}}Repository')
+    private {{camelCase}}Repository: I{{pascalCase}}Repository,
   ) {}
 
   async execute(id: string): Promise<{{pascalCase}}Model> {
-    const currentModel = await this.{{modelCamel}}Repository.findOne({ _id: id });
+    const currentModel = await this.{{camelCase}}Repository.findOne({ _id: id });
 
     if (!currentModel) {
       throw new Error('item not found');
     }
 
-    return await this.{{modelCamel}}Repository.delete(id);
+    return await this.{{camelCase}}Repository.delete(id);
   }
 }

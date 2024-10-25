@@ -30,7 +30,7 @@ import { {{pascalCase}}Presenter } from './{{kebabCase}}.presenter';
 import { ErrorResponse } from '@infrastructure/errors/error';
 import { Update{{pascalCase}}Dto } from './dtos/update.dto';
 
-@Controller('{{modelCamel}}')
+@Controller('{{camelCase}}')
 @ApiTags('{{pascalCase}}')
 @ApiProduces('application/json')
 @ApiInternalServerErrorResponse({
@@ -49,7 +49,7 @@ export class {{pascalCase}}Controller {
 
   @Post()
   @ApiOperation({
-    summary: 'Creates a {{modelCamel}}',
+    summary: 'Creates a {{camelCase}}',
   })
   @ApiConsumes('application/json')
   @ApiOkResponse({
@@ -64,13 +64,13 @@ export class {{pascalCase}}Controller {
   async create(
     @Body() create{{pascalCase}}: Create{{pascalCase}}Dto,
   ): Promise<{{pascalCase}}Presenter> {
-    const {{modelCamel}} = await this.create{{pascalCase}}.execute(create{{pascalCase}});
-    return new {{pascalCase}}Presenter({{modelCamel}});
+    const {{camelCase}} = await this.create{{pascalCase}}.execute(create{{pascalCase}});
+    return new {{pascalCase}}Presenter({{camelCase}});
   }
 
   @Put('/:id')
   @ApiOperation({
-    summary: 'Update a {{modelCamel}}',
+    summary: 'Update a {{camelCase}}',
   })
   @ApiParam({
     name: 'id',
@@ -92,16 +92,16 @@ export class {{pascalCase}}Controller {
     @Param('id') id: string,
     @Body() update{{pascalCase}}: Update{{pascalCase}}Dto,
   ): Promise<{{pascalCase}}Presenter> {
-    const {{modelCamel}} = await this.update{{pascalCase}}.execute(
+    const {{camelCase}} = await this.update{{pascalCase}}.execute(
       { _id: id },
       update{{pascalCase}},
     );
-    return new {{pascalCase}}Presenter({{modelCamel}});
+    return new {{pascalCase}}Presenter({{camelCase}});
   }
 
   @Delete('/:id')
   @ApiOperation({
-    summary: 'Delete a {{modelCamel}}',
+    summary: 'Delete a {{camelCase}}',
   })
   @ApiParam({
     name: 'id',
@@ -121,7 +121,7 @@ export class {{pascalCase}}Controller {
 
   @Get('/')
   @ApiOperation({
-    summary: 'Gets {{modelCamel}}s',
+    summary: 'Gets {{camelCase}}s',
   })
   @ApiOkResponse({
     description: 'Success',
@@ -131,13 +131,13 @@ export class {{pascalCase}}Controller {
   async getAll(@Query() query): Promise<any> {
     const result = await this.findAll{{pascalCase}}.execute(query);
     return {
-      data: result.map(({{modelCamel}}) => new {{pascalCase}}Presenter({{modelCamel}})),
+      data: result.map(({{camelCase}}) => new {{pascalCase}}Presenter({{camelCase}})),
     };
   }
 
   @Get('/:id')
   @ApiOperation({
-    summary: 'Gets a {{modelCamel}} details',
+    summary: 'Gets a {{camelCase}} details',
   })
   @ApiParam({
     name: 'id',

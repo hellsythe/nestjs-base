@@ -1,0 +1,28 @@
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { FindOne } from './find-one';
+import { TestBed } from '@automock/jest';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+
+describe('find {{camelCase}}', () => {
+  let findOne: FindOne;
+  let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
+
+  beforeAll(async () => {
+    const { unit, unitRef } = TestBed.create(FindOne).compile();
+    findOne = unit;
+    {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
+  });
+
+  test('Success', async () => {
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    {{camelCase}}Repository.findOne.mockResolvedValue({{camelCase}}Fake);
+
+    const found{{pascalCase}} = await findOne.execute({ {{property}}: {{camelCase}}Fake.{{property}} });
+
+    expect(found{{pascalCase}}.{{property}}).toEqual({{camelCase}}Fake.{{property}});
+    expect({{camelCase}}Repository.findOne).toHaveBeenCalledWith({
+      {{property}}: {{camelCase}}Fake.{{property}},
+    });
+  });
+});

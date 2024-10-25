@@ -6,20 +6,20 @@ import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.in
 
 describe('create{{pascalCase}}', () => {
   let create{{pascalCase}}: Create{{pascalCase}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
+  let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
     const { unit, unitRef } = TestBed.create(Create{{pascalCase}}).compile();
     create{{pascalCase}} = unit;
-    {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
+    {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
   });
 
   test('create{{pascalCase}}', async () => {
-    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
-    {{modelCamel}}Repository.create.mockResolvedValueOnce({{modelCamel}}Fake);
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    {{camelCase}}Repository.create.mockResolvedValueOnce({{camelCase}}Fake);
 
-    await create{{pascalCase}}.execute({{modelCamel}}Fake);
+    await create{{pascalCase}}.execute({{camelCase}}Fake);
 
-    expect({{modelCamel}}Repository.create).toHaveBeenCalledWith({{modelCamel}}Fake);
+    expect({{camelCase}}Repository.create).toHaveBeenCalledWith({{camelCase}}Fake);
   });
 });

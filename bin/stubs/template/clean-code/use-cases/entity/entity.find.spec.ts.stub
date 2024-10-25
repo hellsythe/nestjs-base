@@ -4,25 +4,25 @@ import { TestBed } from '@automock/jest';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 
-describe('find {{modelCamel}}', () => {
+describe('find {{camelCase}}', () => {
   let find: FindAll{{pascalCase}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
+  let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
     const { unit, unitRef } = TestBed.create(FindAll{{pascalCase}}).compile();
     find = unit;
-    {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
+    {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
   });
 
   test('Success', async () => {
-    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
-    {{modelCamel}}Repository.find.mockResolvedValue([{{modelCamel}}Fake]);
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    {{camelCase}}Repository.find.mockResolvedValue([{{camelCase}}Fake]);
 
-    const foundAll = await find.execute({ {{property}}: {{modelCamel}}Fake.{{property}} });
+    const foundAll = await find.execute({ {{property}}: {{camelCase}}Fake.{{property}} });
 
     expect(foundAll.length).toBe(1);
-    expect({{modelCamel}}Repository.find).toHaveBeenCalledWith({
-      {{property}}: {{modelCamel}}Fake.{{property}},
+    expect({{camelCase}}Repository.find).toHaveBeenCalledWith({
+      {{property}}: {{camelCase}}Fake.{{property}},
     });
   });
 });

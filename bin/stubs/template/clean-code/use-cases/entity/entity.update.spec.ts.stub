@@ -1,0 +1,49 @@
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { TestBed } from '@automock/jest';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { Update{{pascalCase}} } from './update';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
+
+describe('update {{camelCase}}', () => {
+  let update{{pascalCase}}: Update{{pascalCase}};
+  let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
+
+  beforeAll(async () => {
+    const { unit, unitRef } = TestBed.create(Update{{pascalCase}}).compile();
+    update{{pascalCase}} = unit;
+    {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
+  });
+
+  test('update {{camelCase}}', async () => {
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    const {{camelCase}}FakeClone = JSON.parse(JSON.stringify({{camelCase}}Fake));
+
+    {{camelCase}}FakeClone.{{property}} = 'edited';
+    {{camelCase}}Repository.findOne.mockResolvedValue({{camelCase}}Fake);
+    {{camelCase}}Repository.update.mockResolvedValue({{camelCase}}FakeClone);
+
+    await update{{pascalCase}}.execute(
+      { {{property}}: {{camelCase}}Fake.{{property}} },
+      {{camelCase}}FakeClone,
+    );
+
+    expect({{camelCase}}Repository.findOne).toHaveBeenCalled();
+    expect({{camelCase}}Repository.update).toHaveBeenCalled();
+  });
+
+  test('update missing {{camelCase}}', async () => {
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    const {{camelCase}}FakeClone = JSON.parse(JSON.stringify({{camelCase}}Fake));
+
+    {{camelCase}}FakeClone.{{property}} = 'edited';
+    {{camelCase}}Repository.update.mockResolvedValue({{camelCase}}FakeClone);
+
+    await update{{pascalCase}}.execute(
+      { {{property}}: {{camelCase}}Fake.{{property}} },
+      {{camelCase}}FakeClone,
+    );
+
+    expect({{camelCase}}Repository.findOne).toHaveBeenCalled();
+    expect({{camelCase}}Repository.update).toHaveBeenCalled();
+  });
+});

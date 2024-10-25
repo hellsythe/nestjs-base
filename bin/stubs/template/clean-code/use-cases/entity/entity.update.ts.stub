@@ -1,0 +1,23 @@
+import { Inject } from '@nestjs/common';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { Update{{pascalCase}}DtoInterface } from './dtos/update.dto';
+
+export class Update{{pascalCase}} {
+  constructor(
+    @Inject('{{camelCase}}Repository')
+    private {{camelCase}}Repository: I{{pascalCase}}Repository,
+  ) {}
+
+  async execute(
+    query: any,
+    {{camelCase}}: Update{{pascalCase}}DtoInterface,
+  ): Promise<{{pascalCase}}Model> {
+    const current{{pascalCase}} = await this.{{camelCase}}Repository.findOne(query);
+    const new{{pascalCase}} = { ...current{{pascalCase}}, ...{{camelCase}} };
+
+    await this.{{camelCase}}Repository.update(query, new{{pascalCase}});
+
+    return this.{{camelCase}}Repository.findOne(query);
+  }
+}

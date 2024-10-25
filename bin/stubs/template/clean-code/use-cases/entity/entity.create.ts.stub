@@ -5,11 +5,11 @@ import { Create{{pascalCase}}DtoInterface } from './dtos/create.dto';
 
 export class Create{{pascalCase}} {
   constructor(
-    @Inject('{{modelCamel}}Repository')
-    private {{modelCamel}}Repository: I{{pascalCase}}Repository,
+    @Inject('{{camelCase}}Repository')
+    private {{camelCase}}Repository: I{{pascalCase}}Repository,
   ) {}
 
-  async execute({{modelCamel}}: Create{{pascalCase}}DtoInterface): Promise<{{pascalCase}}Model> {
-    return await this.{{modelCamel}}Repository.create({{modelCamel}});
+  async execute({{camelCase}}: Create{{pascalCase}}DtoInterface): Promise<{{pascalCase}}Model> {
+    return await this.{{camelCase}}Repository.create({{camelCase}});
   }
 }

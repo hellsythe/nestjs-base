@@ -4,11 +4,11 @@ import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.in
 
 export class FindOne {
   constructor(
-    @Inject('{{modelCamel}}Repository')
-    private {{modelCamel}}Repository: I{{pascalCase}}Repository,
+    @Inject('{{camelCase}}Repository')
+    private {{camelCase}}Repository: I{{pascalCase}}Repository,
   ) {}
 
   async execute(query: any): Promise<{{pascalCase}}Model> {
-    return await this.{{modelCamel}}Repository.findOne(query);
+    return await this.{{camelCase}}Repository.findOne(query);
   }
 }

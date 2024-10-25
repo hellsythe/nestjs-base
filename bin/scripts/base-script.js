@@ -32,14 +32,21 @@ export class BaseScript {
   }
 
   async copyFromArchitectureFolder(origin) {
-    await fs.cp(this.path + 'template/' + this.settings.codeTemplate + '/' + origin + '.stub', process.cwd() + '/src/' + origin);
+    await fs.cp(this.path + 'template/clean-code/' + origin + '.stub', process.cwd() + '/src/' + origin);
   }
 
-  async copyFolderFromArchitectureFolder(origin) {
-    const files = await fs.readdir(this.path + 'template/' + this.settings.codeTemplate + '/' + origin);
+  async copyFolderFromArchitectureFolder(origin,entity, properties = false, property = false) {
+    const files = await fs.readdir(this.path + 'template/clean-code/' + origin);
 
     for (let index = 0; index < files.length; index++) {
-      await fs.cp(this.path + 'template/' + this.settings.codeTemplate + '/' + origin + files[index], process.cwd() + '/src/' + origin + files[index].replace('.stub', ''));
+      const filePath = this.path + 'template/clean-code/' + origin + files[index];
+      const stat = await fs.lstat(filePath);
+      if (stat.isFile()) {
+        const newFilePath = process.cwd() + '/src/' + origin + files[index].replace('.stub', '');
+        const newFilePathFixed = newFilePath.replaceAll('entity', this.kebabCase(entity));
+        await fs.cp(filePath, newFilePathFixed);
+        await this.fixCommonVars(newFilePathFixed.replace(process.cwd()+'/', ''), entity, properties, property);
+      }
     }
   }
 
@@ -62,21 +69,25 @@ export class BaseScript {
     }
   }
 
-  async copyFileFromArchitectureFolderAndRename(origin, entity, propierties = false) {
+  async copyFileFromArchitectureFolderAndRename(origin, entity, propierties = false, property = false) {
     const newFile = origin.replaceAll('entity', this.kebabCase(entity));
     await fs.cp(this.path + 'template/clean-code/' + origin + '.stub', process.cwd() + '/src/' + newFile);
-    await this.fixCommonVars('/src/' + newFile, entity, propierties);
+    await this.fixCommonVars('/src/' + newFile, entity, propierties, property);
 
     return process.cwd() + '/src/' + newFile;
   }
 
-  async fixCommonVars(file, entity, propierties = false) {
+  async fixCommonVars(file, entity, propierties = false, property = false) {
     await this.remplazeEntityInFile(file, '{{pascalCase}}', this.pascalCase(entity));
     await this.remplazeEntityInFile(file, '{{kebabCase}}', this.kebabCase(entity));
     await this.remplazeEntityInFile(file, '{{camelCase}}', this.camelCase(entity));
 
     if (propierties) {
       await this.remplazeEntityInFile(file, '{{properties}}', propierties.join('\n\n'));
+    }
+
+    if (property) {
+      await this.remplazeEntityInFile(file, '{{property}}',property);
     }
   }
 

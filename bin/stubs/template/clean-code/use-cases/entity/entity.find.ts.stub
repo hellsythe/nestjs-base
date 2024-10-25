@@ -5,14 +5,14 @@ import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.in
 export class FindAll{{pascalCase}} {
   searchOptions: Array<string> = ['name', 'namespace', 'language', 'waba'];
   constructor(
-    @Inject('{{modelCamel}}Repository')
-    private {{modelCamel}}Repository: I{{pascalCase}}Repository,
+    @Inject('{{camelCase}}Repository')
+    private {{camelCase}}Repository: I{{pascalCase}}Repository,
   ) {}
 
   async execute(query: any): Promise<Array<{{pascalCase}}Model>> {
     this.clearQuery(query);
 
-    return await this.{{modelCamel}}Repository.find(query);
+    return await this.{{camelCase}}Repository.find(query);
   }
 
   private clearQuery(query: any): void {

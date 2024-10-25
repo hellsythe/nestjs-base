@@ -7,28 +7,28 @@ import { NotFoundException } from '@nestjs/common';
 
 describe('delete{{pascalCase}}', () => {
   let delete{{pascalCase}}: Delete{{pascalCase}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
+  let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
     const { unit, unitRef } = TestBed.create(Delete{{pascalCase}}).compile();
     delete{{pascalCase}} = unit;
-    {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
+    {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
   });
 
   test('delete{{pascalCase}}', async () => {
-    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
-    {{modelCamel}}Repository.findOne.mockResolvedValueOnce({{modelCamel}}Fake);
-    {{modelCamel}}Repository.delete.mockResolvedValueOnce({{modelCamel}}Fake);
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    {{camelCase}}Repository.findOne.mockResolvedValueOnce({{camelCase}}Fake);
+    {{camelCase}}Repository.delete.mockResolvedValueOnce({{camelCase}}Fake);
 
     await delete{{pascalCase}}.execute('fakeId');
 
-    expect({{modelCamel}}Repository.delete).toHaveBeenCalledWith('fakeId');
+    expect({{camelCase}}Repository.delete).toHaveBeenCalledWith('fakeId');
   });
 
   test('delete{{pascalCase}}Fail', async () => {
-    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
-    {{modelCamel}}Repository.findOne.mockResolvedValueOnce(null);
-    {{modelCamel}}Repository.delete.mockResolvedValueOnce({{modelCamel}}Fake);
+    const {{camelCase}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
+    {{camelCase}}Repository.findOne.mockResolvedValueOnce(null);
+    {{camelCase}}Repository.delete.mockResolvedValueOnce({{camelCase}}Fake);
 
     await expect(async () => {
       await delete{{pascalCase}}.execute('fakeId');
