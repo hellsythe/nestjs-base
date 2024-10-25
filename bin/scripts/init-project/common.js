@@ -15,5 +15,6 @@ export default class Common extends BaseScript {
     await this.copyFromArchitectureFolder('app.module.ts');
     await this.copyFromArchitectureFolder('interface-adapters/controllers/controllers.module.ts');
     await this.copyFromArchitectureFolder('main.ts');
+    await this.execute(`cp -rvf ${this.path}test ${process.cwd()}`);
   }
 }
