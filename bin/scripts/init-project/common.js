@@ -11,7 +11,7 @@ export default class Common extends BaseScript {
     await promises.cp(this.path+'.env', process.cwd()+'/.env');
 
     await this.copyFromArchitectureFolder('infrastructure/infrastructure.module.ts');
-    await this.copyFromArchitectureFolder('infrastructure/setupSwagger.ts');
+    await this.copyFromArchitectureFolder('infrastructure/setup.ts');
     await this.copyFromArchitectureFolder('app.module.ts');
     await this.copyFromArchitectureFolder('interface-adapters/controllers/controllers.module.ts');
     await this.copyFromArchitectureFolder('main.ts');
