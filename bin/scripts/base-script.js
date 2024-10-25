@@ -139,4 +139,8 @@ export class BaseScript {
 
     return lines;
   }
+
+  firstPropertie() {
+    return this.entityProperties[0].split(':')[0].trim();
+  }
 }

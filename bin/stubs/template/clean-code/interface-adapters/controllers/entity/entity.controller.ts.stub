@@ -20,15 +20,15 @@ import {
   ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
-import { Create{{pascalCase}} } from '@usecases/{{kebabCase}}/create';
-import { Update{{pascalCase}} } from '@usecases/{{kebabCase}}/update';
-import { Delete{{pascalCase}} } from '@usecases/{{kebabCase}}/delete';
-import { FindOne } from '@usecases/{{kebabCase}}/find-one';
-import { FindAll{{pascalCase}} } from '@usecases/{{kebabCase}}/find';
-import { Create{{pascalCase}}Dto } from './dtos/create.dto';
+import { Create{{pascalCase}} } from '@usecases/{{kebabCase}}/create.{{kebabCase}}';
+import { Update{{pascalCase}} } from '@usecases/{{kebabCase}}/update.{{kebabCase}}';
+import { Delete{{pascalCase}} } from '@usecases/{{kebabCase}}/delete.{{kebabCase}}';
+import { FindOne{{pascalCase}} } from '@usecases/{{kebabCase}}/find-one.{{kebabCase}}';
+import { FindAll{{pascalCase}} } from '@usecases/{{kebabCase}}/find.{{kebabCase}}';
+import { Create{{pascalCase}}Dto } from './dtos/create.{{kebabCase}}.dto';
 import { {{pascalCase}}Presenter } from './{{kebabCase}}.presenter';
 import { ErrorResponse } from '@infrastructure/errors/error';
-import { Update{{pascalCase}}Dto } from './dtos/update.dto';
+import { Update{{pascalCase}}Dto } from './dtos/update.{{kebabCase}}.dto';
 
 @Controller('{{camelCase}}')
 @ApiTags('{{pascalCase}}')
@@ -41,7 +41,7 @@ export class {{pascalCase}}Controller {
   constructor(
     @Inject()
     private readonly create{{pascalCase}}: Create{{pascalCase}},
-    private readonly findOne: FindOne,
+    private readonly findOne: FindOne{{pascalCase}},
     private readonly findAll{{pascalCase}}: FindAll{{pascalCase}},
     private readonly update{{pascalCase}}: Update{{pascalCase}},
     private readonly delete{{pascalCase}}: Delete{{pascalCase}},

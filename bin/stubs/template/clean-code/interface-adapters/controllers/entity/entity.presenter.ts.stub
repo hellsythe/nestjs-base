@@ -1,10 +1,16 @@
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
-// import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 export class {{pascalCase}}Presenter {
   constructor(partial: Partial<{{pascalCase}}Model>) {
     Object.assign(this, partial);
   }
+
+  @Exclude()
+  _id?: string;
+
+  @Exclude()
+  __v?: number;
 
 {{properties}}
 }

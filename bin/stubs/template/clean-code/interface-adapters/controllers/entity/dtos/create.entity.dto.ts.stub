@@ -1,0 +1,7 @@
+import { Create{{pascalCase}}DtoInterface } from '@usecases/template/dtos/create.{{kebabCase}}.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
+
+export class Create{{pascalCase}}Dto implements Create{{pascalCase}}DtoInterface {
+{{properties}}
+}

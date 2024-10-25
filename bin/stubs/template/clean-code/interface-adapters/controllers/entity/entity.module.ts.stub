@@ -1,0 +1,34 @@
+import { Module } from '@nestjs/common';
+import { {{pascalCase}}Controller } from './{{kebabCase}}.controller';
+import { Create{{pascalCase}} } from '@usecases/{{kebabCase}}/create.{{kebabCase}}';
+import { Update{{pascalCase}} } from '@usecases/{{kebabCase}}/update.{{kebabCase}}';
+import { Delete{{pascalCase}} } from '@usecases/{{kebabCase}}/delete.{{kebabCase}}';
+import { FindAll{{pascalCase}} } from '@usecases/{{kebabCase}}/find.{{kebabCase}}';
+import { FindOne{{pascalCase}} } from '@usecases/{{kebabCase}}/find-one.{{kebabCase}}';
+import { MongooseModule } from '@nestjs/mongoose';
+import {
+  {{pascalCase}},
+  {{pascalCase}}Schema,
+} from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema';
+import { {{pascalCase}}Repository } from '@infrastructure/db/mongo/repositories/{{kebabCase}}.repository';
+
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      { name: {{pascalCase}}.name, schema: {{pascalCase}}Schema },
+    ]),
+  ],
+  controllers: [{{pascalCase}}Controller],
+  providers: [
+    Create{{pascalCase}},
+    Update{{pascalCase}},
+    Delete{{pascalCase}},
+    FindAll{{pascalCase}},
+    FindOne{{pascalCase}},
+    {
+      provide: '{{camelCase}}Repository',
+      useClass: {{pascalCase}}Repository,
+    },
+  ],
+})
+export class {{pascalCase}}Module {}
