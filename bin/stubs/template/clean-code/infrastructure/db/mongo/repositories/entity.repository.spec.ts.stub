@@ -1,7 +1,7 @@
 import {
   {{pascalCase}},
   {{pascalCase}}Schema,
-} from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema';
+} from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema.mongo';
 import { {{pascalCase}}Repository } from './{{kebabCase}}.repository';
 import { Model } from 'mongoose';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';

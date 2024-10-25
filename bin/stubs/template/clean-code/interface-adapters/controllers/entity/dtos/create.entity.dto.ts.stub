@@ -1,4 +1,4 @@
-import { Create{{pascalCase}}DtoInterface } from '@usecases/template/dtos/create.{{kebabCase}}.dto';
+import { Create{{pascalCase}}DtoInterface } from '@usecases/{{kebabCase}}/dtos/create.{{kebabCase}}.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 

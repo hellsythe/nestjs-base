@@ -9,7 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   {{pascalCase}},
   {{pascalCase}}Schema,
-} from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema';
+} from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema.mongo';
 import { {{pascalCase}}Repository } from '@infrastructure/db/mongo/repositories/{{kebabCase}}.repository';
 
 @Module({
