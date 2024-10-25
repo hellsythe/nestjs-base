@@ -7,6 +7,5 @@ export default class Entity extends BaseScript {
   async generate(args) {
     this.validate(args);
     await this.copyFileFromArchitectureFolderAndRename('entities/entity.model.ts', args[4]);
-    await this.remplazeEntityInFile(`src/entities/${this.kebabCase(args[4])}.model.ts`, '{{pascalCase}}',  this.pascalCase(args[4]));
   }
 }

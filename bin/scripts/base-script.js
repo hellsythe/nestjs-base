@@ -60,8 +60,14 @@ export class BaseScript {
 
   async copyFileFromArchitectureFolderAndRename(origin, entity)
   {
-    const newFilename = origin.replace('entity', this.kebabCase(entity));
-    await fs.cp(this.path+'template/clean-code/'+origin+'.stub', process.cwd()+'/src/'+newFilename);
+    const newFile = origin.replace('entity', this.kebabCase(entity));
+    await fs.cp(this.path+'template/clean-code/'+origin+'.stub', process.cwd()+'/src/'+newFile);
+    await this.fixCommonVars('/src/'+newFile, entity);
+  }
+
+  async fixCommonVars(file, entity)
+  {
+    await this.remplazeEntityInFile(file, '{{pascalCase}}',  this.pascalCase(entity));
   }
 
   kebabCase(string) {
