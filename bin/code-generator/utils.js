@@ -73,7 +73,7 @@ export async function addContentInLineToFile(file, content, lineNumber) {
 }
 
 export async function remplazeClassesInFile(file, entity) {
-  await remplazeInFile(file, '{{modelClass}}', pascalCase(entity));
-  await remplazeInFile(file, '{{modelFile}}', kebabCase(entity));
+  await remplazeInFile(file, '{{pascalCase}}', pascalCase(entity));
+  await remplazeInFile(file, '{{kebabCase}}', kebabCase(entity));
   await remplazeInFile(file, '{{modelCamel}}', camelCase(entity));
 }

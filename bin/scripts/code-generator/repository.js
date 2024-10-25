@@ -1,91 +1,51 @@
-import { promises } from "fs";
+import { BaseScript } from "./../base-script.js";
 
-export default class Repository {
-  stubFolder = process.cwd() + '/node_modules/@sdkconsultoria/nestjs-base/bin/code-generator/stubs/';
-  outFolder = process.cwd() + '/src/infrastructure/db/mongo';
-  outFolderRepository = process.cwd() + '/src/infrastructure/db/mongo/repositories/';
+export default class Repository extends BaseScript {
+  entityProperties;
 
   async generate(args) {
     this.validate(args);
-    await this.writteSchema(args);
-    await this.writteRepository(args);
-    await this.writteFactory(args);
-  }
+    this.entityProperties = await this.loadEntityProperties(args[4]);
 
-  validate(args) {
-    if (args[4] == undefined) {
-      throw new Error('La entidad no existe');
-    }
+    await this.writteSchema(args);
+    await this.writteFactory(args);
+    await this.writteRepository(args);
   }
 
   async writteSchema(args) {
-    const outFile = `${this.outFolder}/schemas/${kebabCase(args[4])}.schema.ts`;
-    await promises.cp(`${this.stubFolder}/schema.mongo.ts.stub`, outFile);
-    await remplazeInFile(outFile, '{{entityClass}}', pascalCase(args[4]));
-    const propierties = await this.loadProperties(args);
-    await remplazeInFile(outFile, '{}', `{${propierties.join('\n')}\n}`);
-
+    await this.copyFileFromArchitectureFolderAndRename('infrastructure/db/mongo/schemas/entity.schema.mongo.ts', args[4], this.loadSchemaProperties());
   }
 
-  async writteRepository(args){
-    const repositoryInterface = `${process.cwd() + '/src/use-cases/'}${kebabCase(args[4])}/repository.interface.ts`;
-    await promises.cp(`${this.stubFolder}usecases/model.repository.interface.ts.stub`, repositoryInterface);
-    await remplazeInFile(repositoryInterface, '{{modelClass}}', pascalCase(args[4]));
-    await remplazeInFile(repositoryInterface, '{{modelFile}}', kebabCase(args[4]));
+  loadSchemaProperties() {
+    const newProperties = this.entityProperties.map(item => '  @Prop({ required: true })\n' + item);
+    newProperties.push('  @Prop({ index: true })\n  deletedAt: Date;');
 
-    await promises.cp(`${this.stubFolder}usecases/model.repository.ts.stub`, `${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`);
-    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelClass}}', pascalCase(args[4]));
-    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.ts`, '{{modelFile}}', kebabCase(args[4]));
+    return newProperties;
+  }
 
-    await promises.cp(`${this.stubFolder}usecases/model.repository.spec.ts.stub`, `${this.outFolderRepository}${kebabCase(args[4])}.repository.spec.ts`);
-    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.spec.ts`, '{{modelFile}}', kebabCase(args[4]));
-    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.spec.ts`, '{{modelClass}}', pascalCase(args[4]));
-    await remplazeInFile(`${this.outFolderRepository}${kebabCase(args[4])}.repository.spec.ts`, '{{modelCamelCase}}', camelCase(args[4]));
-
+  async writteRepository(args) {
+    await this.copyFileFromArchitectureFolderAndRename('use-cases/entity/entity.repository.interface.ts', args[4]);
+    await this.copyFileFromArchitectureFolderAndRename('infrastructure/db/mongo/repositories/entity.repository.spec.ts', args[4]);
+    await this.copyFileFromArchitectureFolderAndRename('infrastructure/db/mongo/repositories/entity.repository.ts', args[4]);
   }
 
   async writteFactory(args) {
-    const propierties = await this.loadPropertiesFactory(args);
-    await promises.cp(`${this.stubFolder}model.factory.ts.stub`, `${process.cwd()}/test/factory/${kebabCase(args[4])}.factory.ts`);
-    await remplazeInFile(`${process.cwd()}/test/factory/${kebabCase(args[4])}.factory.ts`, '{{modelClass}}', pascalCase(args[4]));
-    await remplazeInFile(`${process.cwd()}/test/factory/${kebabCase(args[4])}.factory.ts`, '{}', `{\n${propierties.join('\n')}\n  }`);
+    const filePath = await this.copyFileFromArchitectureFolderAndRename('test/factory/entity.factory.ts', args[4], this.loadFactoryProperties());
+    await this.execute(`mv ${filePath} test/factory/`)
+    await this.execute(`rm src/test -rf`)
   }
 
-  async loadProperties(args) {
-    const data = await processLineByLine(`${process.cwd()}/src/entities/${kebabCase(args[4])}.model.ts`);
-    const props = [];
-    for (let index = 0; index < data.length; index++) {
-      if (data[index].includes(':')) {
-        props.push('\n  @Prop({ required: true })\n'+data[index]);
+  loadFactoryProperties() {
+    return this.entityProperties.map(item => {
+      const type = item.split(':');
+      switch (type[1].trim()) {
+        case 'string;':
+          return `  ${type[0]}: faker.word.adjective(),`;
+        case 'number;':
+          return `  ${type[0]}: faker.number.bigInt(),`;
+        default:
+          return `  ${type[0]}: null,`;
       }
-    }
-
-    props.push('\n  @Prop({ index: true })\n  deletedAt: Date;');
-
-    return props;
-  }
-
-  async loadPropertiesFactory(args) {
-    const data = await processLineByLine(`${process.cwd()}/src/entities/${kebabCase(args[4])}.model.ts`);
-    const props = [];
-    for (let index = 0; index < data.length; index++) {
-      if (data[index].includes(':')) {
-        const type = data[index].split(':');
-
-        switch (type[1].trim()) {
-          case 'string;':
-            props.push(`  ${type[0]}: faker.word.adjective(),`);
-            break;
-          case 'number;':
-            props.push(`  ${type[0]}: faker.number.bigInt(),`);
-          break;
-          default:
-            props.push(`  ${type[0]}: null,`);
-            break;
-        }
-      }
-    }
-
-    return props;
+    });
   }
 }

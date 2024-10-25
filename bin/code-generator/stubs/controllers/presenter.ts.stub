@@ -1,8 +1,8 @@
-import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 // import { Exclude, Expose } from 'class-transformer';
 
-export class {{modelClass}}Presenter {
-  constructor(partial: Partial<{{modelClass}}Model>) {
+export class {{pascalCase}}Presenter {
+  constructor(partial: Partial<{{pascalCase}}Model>) {
     Object.assign(this, partial);
   }
 

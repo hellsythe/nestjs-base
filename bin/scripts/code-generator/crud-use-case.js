@@ -33,7 +33,7 @@ export default class CrudUseCase{
 
   async copyDto(entity, dto, propierties){
     await promises.cp(`${this.stubFolder}dtos/${dto}.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{{pascalCase}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{}', '{\n'+propierties.join('\n')+'\n}');
   }
 

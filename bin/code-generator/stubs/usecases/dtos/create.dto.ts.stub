@@ -1,1 +1,1 @@
-export interface Create{{modelClass}}Dto {}
+export interface Create{{pascalCase}}Dto {}

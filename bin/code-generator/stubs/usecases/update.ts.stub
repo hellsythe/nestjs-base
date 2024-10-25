@@ -1,22 +1,22 @@
 import { Inject } from '@nestjs/common';
-import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
-import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
-import { Update{{modelClass}}DtoInterface } from './dtos/update.dto';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { Update{{pascalCase}}DtoInterface } from './dtos/update.dto';
 
-export class Update{{modelClass}} {
+export class Update{{pascalCase}} {
   constructor(
     @Inject('{{modelCamel}}Repository')
-    private {{modelCamel}}Repository: I{{modelClass}}Repository,
+    private {{modelCamel}}Repository: I{{pascalCase}}Repository,
   ) {}
 
   async execute(
     query: any,
-    {{modelCamel}}: Update{{modelClass}}DtoInterface,
-  ): Promise<{{modelClass}}Model> {
-    const current{{modelClass}} = await this.{{modelCamel}}Repository.findOne(query);
-    const new{{modelClass}} = { ...current{{modelClass}}, ...{{modelCamel}} };
+    {{modelCamel}}: Update{{pascalCase}}DtoInterface,
+  ): Promise<{{pascalCase}}Model> {
+    const current{{pascalCase}} = await this.{{modelCamel}}Repository.findOne(query);
+    const new{{pascalCase}} = { ...current{{pascalCase}}, ...{{modelCamel}} };
 
-    await this.{{modelCamel}}Repository.update(query, new{{modelClass}});
+    await this.{{modelCamel}}Repository.update(query, new{{pascalCase}});
 
     return this.{{modelCamel}}Repository.findOne(query);
   }

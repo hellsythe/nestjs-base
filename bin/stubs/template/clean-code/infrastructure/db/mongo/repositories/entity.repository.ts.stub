@@ -1,0 +1,24 @@
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { GenericRepositoryMongo } from './generic.repository.mongo';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { {{pascalCase}} as {{pascalCase}}Schema } from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+export class {{pascalCase}}Repository
+  extends GenericRepositoryMongo<{{pascalCase}}Model, {{pascalCase}}Schema>
+  implements I{{pascalCase}}Repository
+{
+  constructor(
+    @InjectModel({{pascalCase}}Schema.name)
+    protected readonly model: Model<{{pascalCase}}Schema>,
+  ) {
+    super();
+  }
+
+  protected transform(item: {{pascalCase}}Schema): {{pascalCase}}Model {
+    const newModel: {{pascalCase}}Model = new {{pascalCase}}Model();
+    Object.assign(newModel, item['_doc']);
+    return newModel;
+  }
+}

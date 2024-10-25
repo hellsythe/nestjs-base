@@ -1,24 +1,24 @@
-import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
-import { createFake{{modelClass}} } from '@test/factory/{{modelFile}}.factory';
-import { Create{{modelClass}} } from './create';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
+import { Create{{pascalCase}} } from './create';
 import { TestBed } from '@automock/jest';
-import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
 
-describe('create{{modelClass}}', () => {
-  let create{{modelClass}}: Create{{modelClass}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{modelClass}}Repository>;
+describe('create{{pascalCase}}', () => {
+  let create{{pascalCase}}: Create{{pascalCase}};
+  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
-    const { unit, unitRef } = TestBed.create(Create{{modelClass}}).compile();
-    create{{modelClass}} = unit;
+    const { unit, unitRef } = TestBed.create(Create{{pascalCase}}).compile();
+    create{{pascalCase}} = unit;
     {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
   });
 
-  test('create{{modelClass}}', async () => {
-    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+  test('create{{pascalCase}}', async () => {
+    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
     {{modelCamel}}Repository.create.mockResolvedValueOnce({{modelCamel}}Fake);
 
-    await create{{modelClass}}.execute({{modelCamel}}Fake);
+    await create{{pascalCase}}.execute({{modelCamel}}Fake);
 
     expect({{modelCamel}}Repository.create).toHaveBeenCalledWith({{modelCamel}}Fake);
   });

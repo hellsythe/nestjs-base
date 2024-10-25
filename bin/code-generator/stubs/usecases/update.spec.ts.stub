@@ -1,28 +1,28 @@
-import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
 import { TestBed } from '@automock/jest';
-import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
-import { Update{{modelClass}} } from './update';
-import { createFake{{modelClass}} } from '@test/factory/{{modelFile}}.factory';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { Update{{pascalCase}} } from './update';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
 
 describe('update {{modelCamel}}', () => {
-  let update{{modelClass}}: Update{{modelClass}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{modelClass}}Repository>;
+  let update{{pascalCase}}: Update{{pascalCase}};
+  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
-    const { unit, unitRef } = TestBed.create(Update{{modelClass}}).compile();
-    update{{modelClass}} = unit;
+    const { unit, unitRef } = TestBed.create(Update{{pascalCase}}).compile();
+    update{{pascalCase}} = unit;
     {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
   });
 
   test('update {{modelCamel}}', async () => {
-    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
     const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
 
     {{modelCamel}}FakeClone.{{property}} = 'edited';
     {{modelCamel}}Repository.findOne.mockResolvedValue({{modelCamel}}Fake);
     {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
 
-    await update{{modelClass}}.execute(
+    await update{{pascalCase}}.execute(
       { {{property}}: {{modelCamel}}Fake.{{property}} },
       {{modelCamel}}FakeClone,
     );
@@ -32,13 +32,13 @@ describe('update {{modelCamel}}', () => {
   });
 
   test('update missing {{modelCamel}}', async () => {
-    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
     const {{modelCamel}}FakeClone = JSON.parse(JSON.stringify({{modelCamel}}Fake));
 
     {{modelCamel}}FakeClone.{{property}} = 'edited';
     {{modelCamel}}Repository.update.mockResolvedValue({{modelCamel}}FakeClone);
 
-    await update{{modelClass}}.execute(
+    await update{{pascalCase}}.execute(
       { {{property}}: {{modelCamel}}Fake.{{property}} },
       {{modelCamel}}FakeClone,
     );

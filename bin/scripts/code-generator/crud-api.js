@@ -12,20 +12,20 @@ export default class CrudApi{
 
   async copyAndReplaceUseCase(entity){
     await promises.cp(`${this.stubFolder}model.controller.ts.stub`, `${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`, '{{pascalCase}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`, '{{modelCamel}}', camelCase(entity));
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`, '{{modelFile}}', kebabCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.controller.ts`, '{{kebabCase}}', kebabCase(entity));
 
     const propierties = await this.loadProperties(entity);
     // await promises.cp(`${this.stubFolder}${useCase}.spec.ts.stub`, `${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`);
-    // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelClass}}', pascalCase(entity));
-    // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelFile}}', kebabCase(entity));
+    // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{pascalCase}}', pascalCase(entity));
+    // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{kebabCase}}', kebabCase(entity));
     // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{modelCamel}}', camelCase(entity));
     // await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${useCase}.spec.ts`, '{{property}}', propierties[0].split(':')[0].trim());
 
     await promises.cp(`${this.stubFolder}presenter.ts.stub`, `${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{modelFile}}', kebabCase(entity));
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{kebabCase}}', kebabCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{pascalCase}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{modelCamel}}', camelCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/${kebabCase(entity)}.presenter.ts`, '{{properties}}', propierties.join('\n'));
   }
@@ -38,7 +38,7 @@ export default class CrudApi{
 
   async copyDto(entity, dto, propierties){
     await promises.cp(`${this.stubFolder}dtos/${dto}.dto.ts.stub`, `${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`);
-    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{{modelClass}}', pascalCase(entity));
+    await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{{pascalCase}}', pascalCase(entity));
     await remplazeInFile(`${this.outFolder}${kebabCase(entity)}/dtos/${dto}.dto.ts`, '{}', '{\n'+propierties.join('\n\n')+'\n}');
   }
 

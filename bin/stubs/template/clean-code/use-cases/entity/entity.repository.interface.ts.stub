@@ -1,0 +1,4 @@
+import { IGenericRepository } from '../common/generic.repository.interface';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+
+export interface I{{pascalCase}}Repository extends IGenericRepository<{{pascalCase}}Model> {}

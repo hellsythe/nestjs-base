@@ -20,31 +20,31 @@ import {
   ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
-import { Create{{modelClass}} } from '@usecases/{{modelFile}}/create';
-import { Update{{modelClass}} } from '@usecases/{{modelFile}}/update';
-import { Delete{{modelClass}} } from '@usecases/{{modelFile}}/delete';
-import { FindOne } from '@usecases/{{modelFile}}/find-one';
-import { FindAll{{modelClass}} } from '@usecases/{{modelFile}}/find';
-import { Create{{modelClass}}Dto } from './dtos/create.dto';
-import { {{modelClass}}Presenter } from './{{modelFile}}.presenter';
+import { Create{{pascalCase}} } from '@usecases/{{kebabCase}}/create';
+import { Update{{pascalCase}} } from '@usecases/{{kebabCase}}/update';
+import { Delete{{pascalCase}} } from '@usecases/{{kebabCase}}/delete';
+import { FindOne } from '@usecases/{{kebabCase}}/find-one';
+import { FindAll{{pascalCase}} } from '@usecases/{{kebabCase}}/find';
+import { Create{{pascalCase}}Dto } from './dtos/create.dto';
+import { {{pascalCase}}Presenter } from './{{kebabCase}}.presenter';
 import { ErrorResponse } from '@infrastructure/errors/error';
-import { Update{{modelClass}}Dto } from './dtos/update.dto';
+import { Update{{pascalCase}}Dto } from './dtos/update.dto';
 
 @Controller('{{modelCamel}}')
-@ApiTags('{{modelClass}}')
+@ApiTags('{{pascalCase}}')
 @ApiProduces('application/json')
 @ApiInternalServerErrorResponse({
   description: 'Server Error',
   type: ErrorResponse,
 })
-export class {{modelClass}}Controller {
+export class {{pascalCase}}Controller {
   constructor(
     @Inject()
-    private readonly create{{modelClass}}: Create{{modelClass}},
+    private readonly create{{pascalCase}}: Create{{pascalCase}},
     private readonly findOne: FindOne,
-    private readonly findAll{{modelClass}}: FindAll{{modelClass}},
-    private readonly update{{modelClass}}: Update{{modelClass}},
-    private readonly delete{{modelClass}}: Delete{{modelClass}},
+    private readonly findAll{{pascalCase}}: FindAll{{pascalCase}},
+    private readonly update{{pascalCase}}: Update{{pascalCase}},
+    private readonly delete{{pascalCase}}: Delete{{pascalCase}},
   ) {}
 
   @Post()
@@ -54,7 +54,7 @@ export class {{modelClass}}Controller {
   @ApiConsumes('application/json')
   @ApiOkResponse({
     description: 'Created',
-    type: Create{{modelClass}}Dto,
+    type: Create{{pascalCase}}Dto,
     status: 201,
   })
   @ApiBadRequestResponse({
@@ -62,10 +62,10 @@ export class {{modelClass}}Controller {
     type: ErrorResponse,
   })
   async create(
-    @Body() create{{modelClass}}: Create{{modelClass}}Dto,
-  ): Promise<{{modelClass}}Presenter> {
-    const {{modelCamel}} = await this.create{{modelClass}}.execute(create{{modelClass}});
-    return new {{modelClass}}Presenter({{modelCamel}});
+    @Body() create{{pascalCase}}: Create{{pascalCase}}Dto,
+  ): Promise<{{pascalCase}}Presenter> {
+    const {{modelCamel}} = await this.create{{pascalCase}}.execute(create{{pascalCase}});
+    return new {{pascalCase}}Presenter({{modelCamel}});
   }
 
   @Put('/:id')
@@ -81,7 +81,7 @@ export class {{modelClass}}Controller {
   @ApiConsumes('application/json')
   @ApiOkResponse({
     description: 'Updated',
-    type: Update{{modelClass}}Dto,
+    type: Update{{pascalCase}}Dto,
     status: 200,
   })
   @ApiBadRequestResponse({
@@ -90,13 +90,13 @@ export class {{modelClass}}Controller {
   })
   async updateByComplexId(
     @Param('id') id: string,
-    @Body() update{{modelClass}}: Update{{modelClass}}Dto,
-  ): Promise<{{modelClass}}Presenter> {
-    const {{modelCamel}} = await this.update{{modelClass}}.execute(
+    @Body() update{{pascalCase}}: Update{{pascalCase}}Dto,
+  ): Promise<{{pascalCase}}Presenter> {
+    const {{modelCamel}} = await this.update{{pascalCase}}.execute(
       { _id: id },
-      update{{modelClass}},
+      update{{pascalCase}},
     );
-    return new {{modelClass}}Presenter({{modelCamel}});
+    return new {{pascalCase}}Presenter({{modelCamel}});
   }
 
   @Delete('/:id')
@@ -116,7 +116,7 @@ export class {{modelClass}}Controller {
   })
   @ApiNotFoundResponse({ description: 'Not Found', type: ErrorResponse })
   async delete(@Param('id') id: string): Promise<void> {
-    await this.delete{{modelClass}}.execute(id);
+    await this.delete{{pascalCase}}.execute(id);
   }
 
   @Get('/')
@@ -125,13 +125,13 @@ export class {{modelClass}}Controller {
   })
   @ApiOkResponse({
     description: 'Success',
-    type: Array<{{modelClass}}Presenter>,
+    type: Array<{{pascalCase}}Presenter>,
     status: 200,
   })
   async getAll(@Query() query): Promise<any> {
-    const result = await this.findAll{{modelClass}}.execute(query);
+    const result = await this.findAll{{pascalCase}}.execute(query);
     return {
-      data: result.map(({{modelCamel}}) => new {{modelClass}}Presenter({{modelCamel}})),
+      data: result.map(({{modelCamel}}) => new {{pascalCase}}Presenter({{modelCamel}})),
     };
   }
 
@@ -147,11 +147,11 @@ export class {{modelClass}}Controller {
   })
   @ApiOkResponse({
     description: 'Success',
-    type: {{modelClass}}Presenter,
+    type: {{pascalCase}}Presenter,
     status: 200,
   })
   @ApiNotFoundResponse({ description: 'Not Found', type: ErrorResponse })
-  async getCharacter(@Param('id') id: string): Promise<{{modelClass}}Presenter> {
-    return new {{modelClass}}Presenter(await this.findOne.execute({ _id: id }));
+  async getCharacter(@Param('id') id: string): Promise<{{pascalCase}}Presenter> {
+    return new {{pascalCase}}Presenter(await this.findOne.execute({ _id: id }));
   }
 }

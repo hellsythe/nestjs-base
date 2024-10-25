@@ -1,37 +1,37 @@
-import { {{modelClass}}Model } from '@entities/{{modelFile}}.model';
-import { createFake{{modelClass}} } from '@test/factory/{{modelFile}}.factory';
-import { Delete{{modelClass}} } from './delete';
+import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
+import { Delete{{pascalCase}} } from './delete';
 import { TestBed } from '@automock/jest';
-import { I{{modelClass}}Repository } from '@usecases/{{modelFile}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
 import { NotFoundException } from '@nestjs/common';
 
-describe('delete{{modelClass}}', () => {
-  let delete{{modelClass}}: Delete{{modelClass}};
-  let {{modelCamel}}Repository: jest.Mocked<I{{modelClass}}Repository>;
+describe('delete{{pascalCase}}', () => {
+  let delete{{pascalCase}}: Delete{{pascalCase}};
+  let {{modelCamel}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
-    const { unit, unitRef } = TestBed.create(Delete{{modelClass}}).compile();
-    delete{{modelClass}} = unit;
+    const { unit, unitRef } = TestBed.create(Delete{{pascalCase}}).compile();
+    delete{{pascalCase}} = unit;
     {{modelCamel}}Repository = unitRef.get('{{modelCamel}}Repository');
   });
 
-  test('delete{{modelClass}}', async () => {
-    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+  test('delete{{pascalCase}}', async () => {
+    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
     {{modelCamel}}Repository.findOne.mockResolvedValueOnce({{modelCamel}}Fake);
     {{modelCamel}}Repository.delete.mockResolvedValueOnce({{modelCamel}}Fake);
 
-    await delete{{modelClass}}.execute('fakeId');
+    await delete{{pascalCase}}.execute('fakeId');
 
     expect({{modelCamel}}Repository.delete).toHaveBeenCalledWith('fakeId');
   });
 
-  test('delete{{modelClass}}Fail', async () => {
-    const {{modelCamel}}Fake: {{modelClass}}Model = createFake{{modelClass}}();
+  test('delete{{pascalCase}}Fail', async () => {
+    const {{modelCamel}}Fake: {{pascalCase}}Model = createFake{{pascalCase}}();
     {{modelCamel}}Repository.findOne.mockResolvedValueOnce(null);
     {{modelCamel}}Repository.delete.mockResolvedValueOnce({{modelCamel}}Fake);
 
     await expect(async () => {
-      await delete{{modelClass}}.execute('fakeId');
+      await delete{{pascalCase}}.execute('fakeId');
     }).rejects.toThrow(new NotFoundException('item not found'));
   });
 });
