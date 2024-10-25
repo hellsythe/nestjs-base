@@ -1,5 +1,5 @@
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
-import { FindAll{{pascalCase}} } from './find';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
+import { FindAll{{pascalCase}} } from './find.{{kebabCase}}';
 import { TestBed } from '@automock/jest';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';

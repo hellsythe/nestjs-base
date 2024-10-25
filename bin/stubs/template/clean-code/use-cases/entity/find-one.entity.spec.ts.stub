@@ -1,15 +1,15 @@
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
-import { FindOne } from './find-one';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
+import { FindOne{{pascalCase}} } from './find-one.{{kebabCase}}';
 import { TestBed } from '@automock/jest';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 
 describe('find {{camelCase}}', () => {
-  let findOne: FindOne;
+  let findOne: FindOne{{pascalCase}};
   let {{camelCase}}Repository: jest.Mocked<I{{pascalCase}}Repository>;
 
   beforeAll(async () => {
-    const { unit, unitRef } = TestBed.create(FindOne).compile();
+    const { unit, unitRef } = TestBed.create(FindOne{{pascalCase}}).compile();
     findOne = unit;
     {{camelCase}}Repository = unitRef.get('{{camelCase}}Repository');
   });

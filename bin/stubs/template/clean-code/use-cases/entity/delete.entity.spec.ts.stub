@@ -1,8 +1,8 @@
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
-import { Delete{{pascalCase}} } from './delete';
+import { Delete{{pascalCase}} } from './delete.{{kebabCase}}';
 import { TestBed } from '@automock/jest';
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
 import { NotFoundException } from '@nestjs/common';
 
 describe('delete{{pascalCase}}', () => {

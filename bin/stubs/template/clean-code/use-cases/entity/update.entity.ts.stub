@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
-import { Update{{pascalCase}}DtoInterface } from './dtos/update.dto';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
+import { Update{{pascalCase}}DtoInterface } from './dtos/update.{{kebabCase}}.dto';
 
 export class Update{{pascalCase}} {
   constructor(

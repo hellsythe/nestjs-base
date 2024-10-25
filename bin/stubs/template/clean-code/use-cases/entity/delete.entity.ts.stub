@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
 
 export class Delete{{pascalCase}} {
   constructor(

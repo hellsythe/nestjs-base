@@ -1,7 +1,7 @@
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
 import { TestBed } from '@automock/jest';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
-import { Update{{pascalCase}} } from './update';
+import { Update{{pascalCase}} } from './update.{{kebabCase}}';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
 
 describe('update {{camelCase}}', () => {

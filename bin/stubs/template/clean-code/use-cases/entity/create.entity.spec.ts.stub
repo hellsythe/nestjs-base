@@ -1,8 +1,8 @@
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
-import { Create{{pascalCase}} } from './create';
+import { Create{{pascalCase}} } from './create.{{kebabCase}}';
 import { TestBed } from '@automock/jest';
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
 
 describe('create{{pascalCase}}', () => {
   let create{{pascalCase}}: Create{{pascalCase}};

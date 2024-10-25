@@ -1,4 +1,4 @@
-import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/repository.interface';
+import { I{{pascalCase}}Repository } from '@usecases/{{kebabCase}}/{{kebabCase}}.repository.interface';
 import { GenericRepositoryMongo } from './generic.repository.mongo';
 import { {{pascalCase}}Model } from '@entities/{{kebabCase}}.model';
 import { {{pascalCase}} as {{pascalCase}}Schema } from '@infrastructure/db/mongo/schemas/{{kebabCase}}.schema';
