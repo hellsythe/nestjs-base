@@ -5,6 +5,7 @@ export default class Health extends BaseScript {
         if (this.settings.healthPage) {
             console.log('Instalando dependencia @nestjs/terminus...');
             await this.execute('npm install --save @nestjs/terminus');
+            await this.copyFolderFromArchitectureFolder('interface-adapters/controllers/health/', 'entity');
             this.addModuleToControllerModule();
         }
     }
