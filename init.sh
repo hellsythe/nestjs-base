@@ -11,7 +11,7 @@ echo "Iniciando proyecto..."
 
 git clone https://github.com/nestjs/typescript-starter.git $1 -q
 cd $1
-rm .git -rf
+rm -rf .git
 git init -q
 git add . &> /dev/null
 git commit -m "Initial commit" &> /dev/null
