@@ -1,0 +1,145 @@
+import { TestBed } from '@automock/jest';
+import { {{pascalCase}}Controller } from './{{kebabCase}}.controller';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as request from 'supertest';
+import { setup } from '@infrastructure/setup';
+import { HttpStatus, NotFoundException } from '@nestjs/common';
+import { Create{{pascalCase}}Dto } from './dtos/create.{{kebabCase}}.dto';
+import { Update{{pascalCase}}Dto } from './dtos/update.{{kebabCase}}.dto';
+import { Create{{pascalCase}} } from '@usecases/{{kebabCase}}/create.{{kebabCase}}';
+import { Update{{pascalCase}} } from '@usecases/{{kebabCase}}/update.{{kebabCase}}';
+import { Delete{{pascalCase}} } from '@usecases/{{kebabCase}}/delete.{{kebabCase}}';
+import { FindOne{{pascalCase}} } from '@usecases/{{kebabCase}}/find-one.{{kebabCase}}';
+import { FindAll{{pascalCase}} } from '@usecases/{{kebabCase}}/find.{{kebabCase}}';
+import { createFake{{pascalCase}} } from '@test/factory/{{kebabCase}}.factory';
+
+describe('{{kebabCase}} endpoints', () => {
+  const { unitRef } = TestBed.create({{pascalCase}}Controller).compile();
+  const create{{pascalCase}}Mock = unitRef.get(Create{{pascalCase}});
+  const update{{pascalCase}}Mock = unitRef.get(Update{{pascalCase}});
+  const delete{{pascalCase}}Mock = unitRef.get(Delete{{pascalCase}});
+  const findAll{{pascalCase}}sMock = unitRef.get(FindAll{{pascalCase}});
+  const findOne{{pascalCase}}sMock = unitRef.get(FindOne{{pascalCase}});
+  let app: NestExpressApplication;
+
+  beforeAll(async () => {
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      controllers: [{{pascalCase}}Controller],
+      providers: [
+        { provide: Create{{pascalCase}}, useValue: create{{pascalCase}}Mock },
+        { provide: Update{{pascalCase}}, useValue: update{{pascalCase}}Mock },
+        { provide: Delete{{pascalCase}}, useValue: delete{{pascalCase}}Mock },
+        { provide: FindOne{{pascalCase}}, useValue: findOne{{pascalCase}}sMock },
+        { provide: FindAll{{pascalCase}}, useValue: findAll{{pascalCase}}sMock },
+      ],
+    }).compile();
+
+    app = moduleRef.createNestApplication<NestExpressApplication>();
+    setup(app);
+    await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('POST - /api/v1/{{kebabCase}}', () => {
+    test('CreateSuccess', () => {
+      const templateFake: Create{{pascalCase}}Dto = createFake{{pascalCase}}();
+
+      return request(app.getHttpServer())
+        .post('/api/v1/{{kebabCase}}')
+        .send(templateFake)
+        .expect(HttpStatus.CREATED);
+    });
+
+    test('CreateFail400', () => {
+      const errorMesages = [
+        'name should not be empty',
+        'age should not be empty',
+      ];
+
+      return request(app.getHttpServer())
+        .post('/api/v1/{{kebabCase}}')
+        .send({})
+        .expect({
+          message: errorMesages,
+          error: 'Bad Request',
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+    });
+  });
+
+  describe('GET - /api/v1/{{kebabCase}}/{id}', () => {
+    test('Success', async () => {
+      const templateFake: Create{{pascalCase}}Dto = createFake{{pascalCase}}();
+
+      jest.mocked(findOne{{pascalCase}}sMock.execute).mockResolvedValue(templateFake);
+
+      await request(app.getHttpServer())
+        .get(`/api/v1/{{kebabCase}}/id`)
+        .expect(HttpStatus.OK);
+    });
+
+    test('Not Found', async () => {
+      const id = 'string';
+      jest
+        .mocked(findOne{{pascalCase}}sMock.execute)
+        .mockRejectedValue(new NotFoundException(`{{pascalCase}} ID ${id}`));
+
+      await request(app.getHttpServer())
+        .get(`/api/v1/{{kebabCase}}/${id}`)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+  });
+
+  describe('PUT - /api/v1/{{kebabCase}}/{id}', () => {
+    test('Sucess', async () => {
+      const templateFake: Create{{pascalCase}}Dto = createFake{{pascalCase}}();
+      jest.mocked(update{{pascalCase}}Mock.execute).mockResolvedValue(templateFake);
+      const newPayload = {
+        name: templateFake.name,
+        age: templateFake.age,
+      };
+      await request(app.getHttpServer())
+        .put(`/api/v1/{{kebabCase}}/string`)
+        .send(newPayload)
+        .expect(HttpStatus.OK);
+    });
+
+    test('Fail', async () => {
+      const errorMesages = [
+        'name should not be empty',
+        'age should not be empty',
+      ];
+
+      await request(app.getHttpServer())
+        .put(`/api/v1/{{kebabCase}}/string`)
+        .send({})
+        .expect({
+          message: errorMesages,
+          error: 'Bad Request',
+          statusCode: HttpStatus.BAD_REQUEST,
+        });
+    });
+
+    test('Not Found', async () => {
+      const templateFake: Create{{pascalCase}}Dto = createFake{{pascalCase}}();
+      const id = '33432424';
+      const metaPayload = {
+        name: templateFake.name,
+        age: templateFake.age,
+      } satisfies Update{{pascalCase}}Dto;
+
+      jest
+        .mocked(update{{pascalCase}}Mock.execute)
+        .mockRejectedValue(new NotFoundException(`Template ID ${id}`));
+
+      await request(app.getHttpServer())
+        .put(`/api/v1/${id}/string`)
+        .send(metaPayload)
+        .expect(HttpStatus.NOT_FOUND);
+    });
+  });
+});

@@ -18,5 +18,6 @@ export default class Common extends BaseScript {
     await this.copyFromArchitectureFolder('main.ts');
     await this.execute(`mkdir -p ${process.cwd()}/test/factory`);
     await this.execute(`cp -rvf ${this.path}test ${process.cwd()}`);
+    await this.execute(`cp -rvf ${this.path}jest.config.ts ${process.cwd()}`);
   }
 }

@@ -30,7 +30,7 @@ import { {{pascalCase}}Presenter } from './{{kebabCase}}.presenter';
 import { ErrorResponse } from '@infrastructure/errors/error';
 import { Update{{pascalCase}}Dto } from './dtos/update.{{kebabCase}}.dto';
 
-@Controller('{{camelCase}}')
+@Controller('{{kebabCase}}')
 @ApiTags('{{pascalCase}}')
 @ApiProduces('application/json')
 @ApiInternalServerErrorResponse({

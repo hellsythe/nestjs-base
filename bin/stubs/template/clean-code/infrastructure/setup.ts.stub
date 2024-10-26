@@ -31,19 +31,7 @@ export function setup(app: INestApplication): void {
 }
 
 export function setupSwagger(app: INestApplication): void {
-  const configService = app.get(ConfigService);
-  const documentBuilder = new DocumentBuilder()
-    .setTitle('NestJS Archetype API')
-    .setDescription('Starwars characters demo')
-    .setVersion('1.0.0');
-
-  const baseUrl = configService.get<string>('BASE_URL', '');
-
-  documentBuilder.addServer(baseUrl);
-
-  const config = documentBuilder.build();
-
-  const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('api', app, document);
+  const config = new DocumentBuilder().setVersion('1.0').build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
 }
